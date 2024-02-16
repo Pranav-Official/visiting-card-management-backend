@@ -54,6 +54,7 @@ Cards.init(
     parent_card_id: {
       type: DataTypes.UUID,
       allowNull: true,
+      defaultValue: null,
     },
     user_id: {
       type: DataTypes.UUID,

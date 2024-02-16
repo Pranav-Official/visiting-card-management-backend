@@ -1,10 +1,11 @@
 import express, { Express } from 'express';
 import { sequelize } from './config/sequalizeConfig';
+// import Cards from './models/cards';
 // import associations from './models/associations';
 
 const app: Express = express();
 
-// associations(); lets use this later
+// associations();
 
 sequelize
   .sync({ force: false })
