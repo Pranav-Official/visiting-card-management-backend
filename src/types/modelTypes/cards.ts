@@ -1,22 +1,22 @@
 import { Model } from 'sequelize';
-
-export class Cards extends Model {
-  public card_id!: string;
-  public card_name!: string | null;
-  public img_front_link!: string | null;
-  public img_back_link!: string | null;
-  public job_title!: string | null;
-  public email!: string | null;
-  public phone!: string | null;
-  public company_name!: string | null;
-  public company_website!: string | null;
-  public description!: string | null;
-  public contatact_name!: string | null;
-  public parent_card_id!: string | null;
-  public user_id!: string | null;
-  public shared_or_not!: number | null;
-  public createdAt!: Date | null;
-  public modifiedAt!: Date | null;
+interface CardType {
+  card_id: string;
+  card_name: string | null;
+  img_front_link: string | null;
+  img_back_link: string | null;
+  job_title: string | null;
+  email: string | null;
+  phone: string | null;
+  company_name: string | null;
+  company_website: string | null;
+  description: string | null;
+  contact_name: string | null;
+  parent_card_id: string | null;
+  user_id: string | null;
+  shared_or_not: number | null;
+  createdAt: Date | null;
+  modifiedAt: Date | null;
 }
+export class Cards extends Model<CardType> {}
 
 export default Cards;

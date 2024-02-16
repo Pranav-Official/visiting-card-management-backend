@@ -7,7 +7,8 @@ import bcrypt from 'bcrypt';
 UserTable.init(
   {
     user_id: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },

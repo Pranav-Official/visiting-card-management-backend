@@ -1,12 +1,14 @@
 import { Model } from 'sequelize';
-
-export class UserTable extends Model {
-  public user_id!: string;
-  public user_fullname!: string | null;
-  public user_email!: string | null;
-  public password_hash!: string | null;
-  public createdAt!: Date | null;
-  public modifiedAt!: Date | null;
+interface UserTableType {
+  user_id: string;
+  user_fullname: string | null;
+  user_email: string | null;
+  password_hash: string | null;
+  createdAt: Date | null;
+  modifiedAt: Date | null;
+}
+export class UserTable extends Model<UserTableType> {
+  password_hash: string | null;
 }
 
 export default UserTable;

@@ -7,16 +7,17 @@ import SharedCards from '../types/modelTypes/sharedCards';
 SharedCards.init(
   {
     shared_card_id: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
     card_id: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.UUID,
       allowNull: false,
     },
     user_id: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.UUID,
       allowNull: false,
     },
     status: {
@@ -27,6 +28,11 @@ SharedCards.init(
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    modifiedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
   },

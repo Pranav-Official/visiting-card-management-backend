@@ -6,7 +6,8 @@ import Cards from '../types/modelTypes/cards';
 Cards.init(
   {
     card_id: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
@@ -31,7 +32,7 @@ Cards.init(
       allowNull: true,
     },
     phone: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.STRING(15),
       allowNull: true,
     },
     company_name: {
@@ -46,16 +47,16 @@ Cards.init(
       type: DataTypes.STRING(200),
       allowNull: true,
     },
-    contatact_name: {
+    contact_name: {
       type: DataTypes.STRING(45),
       allowNull: true,
     },
     parent_card_id: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.UUID,
       allowNull: true,
     },
     user_id: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.UUID,
       allowNull: true,
     },
     shared_or_not: {
