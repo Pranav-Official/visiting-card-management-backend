@@ -1,10 +1,18 @@
+
 import { Router,Request,Response } from "express";
 import getContactList from "../services/cardServices/getContactList";
-const cardRouter = Router();
+import createNewCard from '../services/cardServices/createNewCard';
 
+const router =  Router();
 //API end point to get contact list in homepage
-cardRouter.get('/getContactList',async(req:Request,res:Response)=>{
+router.get('/getContactList',async(req:Request,res:Response)=>{
     getContactList(req,res);
 });
 
-export default cardRouter;
+router.post("/createnewcard", async (req: Request, res:Response) => {
+
+    createNewCard(req, res);
+});
+
+export default router;
+
