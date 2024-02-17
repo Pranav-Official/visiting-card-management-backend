@@ -6,19 +6,16 @@ import cardRoutes from './routes/cardRoutes';
 //import Cards from './models/cards';
 // import associations from './models/associations';
 
-
-
-
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1',cardRoutes);
+app.use('/api/v1', cardRoutes);
 app.use('/', profileRoutes);
 
 // associations();
 app.use(express.json());
 
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log('DB Synced');
   })

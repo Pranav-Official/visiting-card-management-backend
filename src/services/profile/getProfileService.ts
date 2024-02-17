@@ -5,7 +5,7 @@ import SharedCards from '../../models/sharedCards';
 
 //getProfile api endpoint
 
-const getProfile = async (req: Request, res: Response) => {
+const getProfileService = async (req: Request, res: Response) => {
   try {
     //finding user
     const { user_id } = req.body;
@@ -58,4 +58,4 @@ const getProfile = async (req: Request, res: Response) => {
   }
 };
 
-export default getProfile;
+export default getProfileService;
