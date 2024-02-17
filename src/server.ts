@@ -1,6 +1,8 @@
 import express, { Express } from 'express';
 import { sequelize } from './config/sequalizeConfig';
+
 import cardRoutes from './routes/cardRoutes'
+
 
 // import Cards from './models/cards';
 
@@ -22,6 +24,7 @@ sequelize
   .catch((err: Error) => {
     console.log('An error occured', err);
   });
+
 
 app.listen(3000, () => {
   console.log(`Server started successfully on PORT 3000`);
