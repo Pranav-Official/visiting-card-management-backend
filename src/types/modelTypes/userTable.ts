@@ -9,6 +9,11 @@ interface UserTableType {
 }
 export class UserTable extends Model<UserTableType> {
   password_hash: string | null;
+  user_id: string;
+  user_fullname: string | null;
+  user_email: string | null;
+  createdAt: Date | null;
+  modifiedAt: Date | null;
 }
 
 export default UserTable;
