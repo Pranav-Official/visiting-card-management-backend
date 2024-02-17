@@ -1,28 +1,25 @@
+import { Router, Request, Response } from 'express';
+import getContactListService from '../services/cardServices/getContactListService';
+import createNewCardService from '../services/cardServices/createNewCardService';
+import getCardListService from '../services/cardServices/getCardListService';
+import addToExistingContactService from '../services/cardServices/addToExistingContactService';
 
-import { Router,Request,Response } from "express";
-import getContactList from "../services/cardServices/getContactList";
-import createNewCard from '../services/cardServices/createNewCard';
-import getCardList from '../services/cardServices/getCardList';
-import addToExistingContact from '../services/cardServices/addToExistingContact';
-
-const router =  Router();
+const router = Router();
 //API end point to get contact list in homepage
-router.get('/getContactList',async(req:Request,res:Response)=>{
-    getContactList(req,res);
+router.get('/getContactList', async (req: Request, res: Response) => {
+  getContactListService(req, res);
 });
 
-router.post("/createnewcard", async (req: Request, res:Response) => {
-
-    createNewCard(req, res);
+router.post('/createNewCard', async (req: Request, res: Response) => {
+  createNewCardService(req, res);
 });
 
-router.get('/getCardList', async (req:Request, res:Response) => {
-    getCardList(req,res);
- });
+router.get('/getCardList', async (req: Request, res: Response) => {
+  getCardListService(req, res);
+});
 
-router.post('/addToExistingContact', async (req: Request, res:Response) => {
-    addToExistingContact(req, res);
-})
+router.post('/addToExistingContact', async (req: Request, res: Response) => {
+  addToExistingContactService(req, res);
+});
 
 export default router;
-

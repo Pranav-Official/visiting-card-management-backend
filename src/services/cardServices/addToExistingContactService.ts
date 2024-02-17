@@ -2,10 +2,9 @@ import { Request, Response } from 'express';
 import Cards from '../../models/cards';
 
 //function to add card to existing contact
-const addToExistingContact = async (req: Request, res: Response) => {
+const addToExistingContactService = async (req: Request, res: Response) => {
   const {
-    parentCardId,
-    card_id,
+    parent_card_id,
     card_name,
     img_front_link,
     img_back_link,
@@ -15,16 +14,15 @@ const addToExistingContact = async (req: Request, res: Response) => {
     company_name,
     company_website,
     description,
-    contact_name,
     user_id,
     shared_or_not,
   } = req.body;
 
-  if (!parentCardId) {
+  if (!parent_card_id) {
     return res.status(400).json({ error: 'Parent Card Id Not Received' });
   }
 
-  if (!card_id || !contact_name || user_id) {
+  if (!user_id) {
     return res
       .status(400)
       .json({ error: 'Necessary Card Details not Received' });
@@ -32,7 +30,6 @@ const addToExistingContact = async (req: Request, res: Response) => {
 
   try {
     const createdCard = await Cards.create({
-      card_id,
       card_name,
       img_front_link,
       img_back_link,
@@ -42,8 +39,7 @@ const addToExistingContact = async (req: Request, res: Response) => {
       company_name,
       company_website,
       description,
-      contact_name,
-      parent_card_id: parentCardId,
+      parent_card_id: parent_card_id,
       user_id,
       shared_or_not,
     });
@@ -56,4 +52,4 @@ const addToExistingContact = async (req: Request, res: Response) => {
   }
 };
 
-export default addToExistingContact;
+export default addToExistingContactService;

@@ -8,6 +8,13 @@ interface SharedCardType {
   createdAt: Date;
   modifiedAt: Date;
 }
-export class SharedCards extends Model<SharedCardType> {}
+export class SharedCards extends Model<SharedCardType> {
+  shared_card_id: string;
+  card_id: string;
+  user_id: string;
+  status: string;
+  createdAt: Date;
+  modifiedAt: Date;
+}
 
 export default SharedCards;
