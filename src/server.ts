@@ -1,14 +1,16 @@
 import express, { Express } from 'express';
 import { sequelize } from './config/sequalizeConfig';
-import createNewCard from './routes/cardRoutes';
+import cardRoutes from './routes/cardRoutes'
+
 // import Cards from './models/cards';
  //import associations from './models/associations';
 
 const app: Express = express();
+app.use(express.json());
+app.use('/api/v1',cardRoutes);
 
 // associations();
 app.use(express.json());
-app.use('/api/v1',createNewCard); //End point to create a new card
 
 sequelize
   .sync({ force: true })
