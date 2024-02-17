@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize';
 export const sequelize = new Sequelize({
   database: 'card_management',
   username: 'root',
-  password: 'experion@123',
+  password: 'rosejohn@13',
   host: 'localhost',
   dialect: 'mysql',
 });
