@@ -1,9 +1,12 @@
 import express, { Express } from 'express';
 import { sequelize } from './config/sequalizeConfig';
+import cardRoutes from './routes/cardRoutes'
 // import Cards from './models/cards';
 // import associations from './models/associations';
 
 const app: Express = express();
+app.use(express.json());
+app.use('/api/v1',cardRoutes);
 
 // associations();
 
