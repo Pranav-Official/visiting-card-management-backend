@@ -50,6 +50,7 @@ const addToExistingContactService = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(401).json({ error: "Couldn't Add Card!!!" });
   }
+  return res.status(401).json({ error: "Couldn't Add Card!!!" });
 };
 
 export default addToExistingContactService;
