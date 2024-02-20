@@ -1,5 +1,11 @@
 import Cards from '../../models/cards';
 
+// /**
+//  * Retrieves the accepted cards for a given user ID from the database.
+//  *
+//  * @param  user_id - The ID of the user for whom to retrieve accepted cards
+//  * @return The accepted cards for the specified user ID
+//  */
 export const getAcceptedCardsService = async (user_id: string) => {
   try {
     const acceptedCards = await Cards.findAll({
