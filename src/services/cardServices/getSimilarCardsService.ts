@@ -14,6 +14,7 @@ const getSimilarCardsService = async (
       where: {
         [Op.or]: [
           // Use the 'Op.or' operator to search for any of the specified conditions
+
           { card_name: card_name },
           { contact_name: card_name },
           { phone: phone },

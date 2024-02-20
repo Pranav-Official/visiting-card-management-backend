@@ -1,21 +1,16 @@
-import { Request, Response } from 'express';
+
 import Cards from '../../models/cards';
 
 //function to get complete contact list in home page
-const getContactListService = async (req: Request, res: Response) => {
+const getContactListService = async (user_id:string) => {
   try {
-    const { user_id } = req.body;
-
-    if (!user_id) {
-      res.status(400).json('user_id missing');
-    }
     const list = await Cards.findAll({
       where: { user_id: user_id, parent_card_id: null },
-      attributes: ['contact_name', 'card_id'],
+      attributes: ['card_name', 'ph'],
     });
-    return res.status(200).json(list);
+    return list;
   } catch (error) {
-    return res.status(401).json('Cannot return contact list');
+    throw new Error('Cannot return contact list');    
   }
 };
 

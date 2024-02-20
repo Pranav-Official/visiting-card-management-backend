@@ -1,10 +1,11 @@
-import { Router, Request, Response } from 'express';
-import getProfileService from '../services/profile/getProfileService';
+//getProfile router
+import { Router } from 'express';
+import getProfileController from '../controllers/profileControllers/getProfileController';
 
 const router = Router();
 
 router.get('/getProfile', async (req: Request, res: Response) => {
-  getProfileService(req, res);
+  getProfileController(req, res);
 });
 
 export default router;
