@@ -3,6 +3,8 @@ import getContactListService from '../services/cardServices/getContactListServic
 import createNewCardService from '../services/cardServices/createNewCardService';
 import getCardListService from '../services/cardServices/getCardListService';
 import addToExistingContactService from '../services/cardServices/addToExistingContactService';
+import editCardDetails from '../controllers/cardControllers/editCardDetails';
+//import createNewCardService from '../controllers/cardControllers/createNewCard';
 
 const router = Router();
 //API end point to get contact list in homepage
@@ -22,4 +24,7 @@ router.post('/addToExistingContact', async (req: Request, res: Response) => {
   addToExistingContactService(req, res);
 });
 
+router.patch('/editCard', async (req: Request, res: Response) => {
+  editCardDetails(req, res);
+});
 export default router;
