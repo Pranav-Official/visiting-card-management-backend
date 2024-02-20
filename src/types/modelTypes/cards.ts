@@ -34,6 +34,16 @@ class Cards extends Model<CardType> {
   shared_or_not: number | null;
   createdAt: Date | null;
   modifiedAt: Date | null;
+  static card_name: any;
+  static img_front_link: any;
+  static img_back_link: any;
+  static job_title: any;
+  static email: any;
+  static phone: any;
+  static company_name: any;
+  static company_website: any;
+  static contact_name: any;
+  static user_id: any;
 }
 
 export default Cards;

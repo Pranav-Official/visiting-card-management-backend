@@ -1,13 +1,13 @@
-import { Request, Response } from 'express';
 import Cards from "../../models/cards";
 import SharedCards from "../../models/sharedCards";
 
-const getPendingCardsService = async (req: Request, res: Response): Promise<any> => {
-  try {
-    const userId = req.query.userId as string;
+//Function to get the pending card list and its details
 
+const getPendingCardsService = async (userId: string): Promise<any> => {
+
+   try {
     if (!userId) {
-       return res.status(400).json({ error: 'User ID is missing in the request.' });
+       throw new Error('User ID is missing in the request.');
     }
 
     const pendingCards = await SharedCards.findAll({
@@ -16,25 +16,32 @@ const getPendingCardsService = async (req: Request, res: Response): Promise<any>
         {
           model: Cards,
           attributes: [
-          'card_name', 
-          'img_front_link', 
-          'img_back_link', 
-          'job_title', 
-          'email', 
-          'phone', 
-          'company_name', 
-          'company_website', 
-          'contact_name', 
-          'user_id'],
+            'card_name', 
+            'img_front_link', 
+            'img_back_link', 
+            'job_title', 
+            'email', 
+            'phone', 
+            'company_name', 
+            'company_website', 
+            'contact_name', 
+            'user_id'
+          ],
         }
       ],
     });
 
-    return res.json(pendingCards);
+    return {
+      hasPendingCards: pendingCards.length > 0,
+      message: pendingCards.length > 0 ? 'Pending cards found' : 'No pending cards found',
+      pendingCards: pendingCards.map(card => card.toJSON()),
+    };
+
   } catch (error) {
     console.error('Error fetching pending cards:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return { hasPendingCards: false, message: 'Internal Server Error' };
   }
 };
 
 export default getPendingCardsService;
+
