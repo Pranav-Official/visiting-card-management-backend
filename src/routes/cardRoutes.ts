@@ -1,6 +1,9 @@
 import { Router, Request, Response } from 'express';
+
+import getCardListController from '../controllers/cardControllers/getCardListController';
+import deleteCardController from '../controllers/cardControllers/deleteCardController';
+
 import createNewCardController from '../controllers/cardControllers/createNewCard';
-import getCardListService from '../services/cardServices/getCardListService';
 import getSimilarCardController from '../controllers/cardControllers/getSimilarCardController';
 import addToExistingContactController from '../controllers/cardControllers/addToExistingCardController';
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
@@ -19,7 +22,7 @@ router.post('/createNewCard', async (req: Request, res: Response) => {
 });
 
 router.get('/getCardList', async (req: Request, res: Response) => {
-  getCardListService(req, res);
+  getCardListController(req, res);
 });
 
 //API Endpoint to Add Card to an Existing Contact
@@ -39,5 +42,8 @@ router.get('/getSearchList', async (req: Request, res: Response) => {
 router.get('/getSimilarCards', async (req: Request, res: Response) => {
   getSimilarCardController(req, res);
 });
+router.patch('/deleteCard',async(req:Request,res:Response)=>{
+    deleteCardController(req,res);
+})
 
 export default router;
