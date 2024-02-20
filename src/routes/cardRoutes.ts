@@ -3,10 +3,11 @@ import createNewCardService from '../services/cardServices/createNewCardService'
 import getCardListService from '../services/cardServices/getCardListService';
 import addToExistingContactService from '../services/cardServices/addToExistingContactService';
 import getContactListController from '../controllers/cardControllers/getContactList';
+import getSearchableListController from '../controllers/cardControllers/getSearchableList';
 const router = Router();
 //API end point to get contact list in homepage
 router.get('/getContactList', async (req: Request, res: Response) => {
-  getContactListController(req, res);
+  await getContactListController(req, res);
 });
 
 router.post('/createNewCard', async (req: Request, res: Response) => {
@@ -19,6 +20,10 @@ router.get('/getCardList', async (req: Request, res: Response) => {
 
 router.post('/addToExistingContact', async (req: Request, res: Response) => {
   addToExistingContactService(req, res);
+});
+
+router.get('/getSearchList', async (req: Request, res: Response) => {
+  await getSearchableListController(req, res);
 });
 
 export default router;
