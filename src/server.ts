@@ -8,7 +8,7 @@ import cardRoutes from './routes/cardRoutes';
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', cardRoutes);
+app.use('/', cardRoutes);
 app.use('/', profileRoutes);
 
 // associations();
@@ -23,6 +23,6 @@ sequelize
     console.log('An error occured', err);
   });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log(`Server started successfully on PORT 3000`);
 });
