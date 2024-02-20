@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import getContactListService from '../services/cardServices/getContactListService';
 import createNewCardService from '../services/cardServices/createNewCardService';
 import getCardListService from '../services/cardServices/getCardListService';
-import addToExistingContactService from '../services/cardServices/addToExistingContactService';
+import addToExistingContactController from '../controllers/cardControllers/addToExistingCardController';
 
 const router = Router();
 //API end point to get contact list in homepage
@@ -19,7 +19,7 @@ router.get('/getCardList', async (req: Request, res: Response) => {
 });
 
 router.post('/addToExistingContact', async (req: Request, res: Response) => {
-  addToExistingContactService(req, res);
+  addToExistingContactController(req, res);
 });
 
 export default router;
