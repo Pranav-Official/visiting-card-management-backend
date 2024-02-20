@@ -1,43 +1,38 @@
-import { Request, Response } from 'express';
 import UserTable from '../../models/userTable';
 import Cards from '../../models/cards';
 import SharedCards from '../../models/sharedCards';
 
-//getProfile api endpoint
-
-const getProfileService = async (req: Request, res: Response) => {
+// Function to fetch profile details
+const getProfileService = async (user_id: string) => {
   try {
-    //finding user
-    const { user_id } = req.body;
-
+    // Finding user details
     const user = await UserTable.findOne({
       where: {
         user_id: user_id,
       },
       raw: true,
     });
+
+    // Logging user details
     console.log(user);
 
-    if (!user) {
-      return res.status(404).json({
-        message: 'User not found!',
-      });
-    }
-    //totalContacts count
+    // Counting total contacts
     const totalContacts = await Cards.count({
       where: {
         user_id: user_id,
         parent_card_id: null,
       },
     });
-    //total accepted cards count
+
+    // Counting total accepted cards
     const acceptedCards = await Cards.count({
       where: {
         user_id: user_id,
         shared_or_not: 1,
       },
     });
-    //total pending cards count
+
+    // Counting total pending cards
     const pendingCards = await SharedCards.count({
       where: {
         user_id: user_id,
@@ -45,16 +40,17 @@ const getProfileService = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({
+    // Returning profile details
+    return {
       fullName: user.user_fullname,
       email: user.user_email,
       totalContacts: totalContacts,
       totalAcceptedCards: acceptedCards,
       totalPendingCards: pendingCards,
-    });
+    };
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error(error);
+    throw new Error('Cannot get profile');
   }
 };
 
