@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import createNewCardController from '../controllers/cardControllers/createNewCard';
 import getCardListService from '../services/cardServices/getCardListService';
+import getSimilarCardController from '../controllers/cardControllers/getSimilarCardController';
 import addToExistingContactController from '../controllers/cardControllers/addToExistingCardController';
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
@@ -33,6 +34,10 @@ router.post('/addToExistingContact', async (req: Request, res: Response) => {
 
 router.get('/getSearchList', async (req: Request, res: Response) => {
   await getSearchableListController(req, res);
+});
+// Call the controller function to handle the request
+router.get('/getSimilarCards', async (req: Request, res: Response) => {
+  getSimilarCardController(req, res);
 });
 
 export default router;
