@@ -1,7 +1,7 @@
 import { Response ,Request} from 'express';
 import getContactListService from "../../services/cardServices/getContactListService";
 
-
+//controller to fetch contactList
 const getContactListController = async(req:Request,res:Response)=>{
 
     try{

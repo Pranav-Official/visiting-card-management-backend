@@ -1,4 +1,6 @@
 import Cards from '../../models/cards';
+
+//function to get complete searchable list
 const getSearchableListService = async (user_id:string) => {
   try {
     const mainCards = await Cards.findAll({
