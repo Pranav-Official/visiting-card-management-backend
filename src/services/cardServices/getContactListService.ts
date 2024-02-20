@@ -11,7 +11,7 @@ const getContactListService = async (req: Request, res: Response) => {
     }
     const list = await Cards.findAll({
       where: { user_id: user_id, parent_card_id: null },
-      attributes: ['contact_name', 'card_id'],
+      attributes: ['card_name', 'ph'],
     });
     return res.status(200).json(list);
   } catch (error) {
