@@ -9,6 +9,7 @@ const userResgistrationController = async (req: Request, res: Response) => {
   }
 
   try {
+    //calls the userRegistrationService
     const returnedValue = await userRegistrationService(
       user_fullname,
       user_email,

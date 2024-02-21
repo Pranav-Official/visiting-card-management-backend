@@ -1,7 +1,12 @@
-
 import UserTable from '../../models/userTable';
 
-const userRegistrationService = async (user_fullname, user_email, password): Promise<boolean> => {
+//User Registration Service
+const userRegistrationService = async (
+  user_fullname,
+  user_email,
+  password,
+): Promise<boolean> => {
+  //To Check if a user with same Email ID Exists
   const existingUser = await UserTable.findOne({
     where: { user_email: user_email },
     raw: true,
@@ -12,6 +17,7 @@ const userRegistrationService = async (user_fullname, user_email, password): Pro
   }
 
   try {
+    //to Create a new User
     const createUser = await UserTable.create(
       { user_fullname, user_email, password_hash: password },
       { raw: true },
