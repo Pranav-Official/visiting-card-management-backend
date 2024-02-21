@@ -2,14 +2,16 @@ import express, { Express } from 'express';
 import { sequelize } from './config/sequalizeConfig';
 import profileRoutes from '../src/routes/profileRoutes';
 import cardRoutes from './routes/cardRoutes';
+import authenticationRoutes from './routes/authenticationRoutes';
 
 //import Cards from './models/cards';
  import associations from './models/associations';
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', cardRoutes);
+app.use('/', cardRoutes);
 app.use('/', profileRoutes);
+app.use('/', authenticationRoutes);
 
  associations();
 app.use(express.json());

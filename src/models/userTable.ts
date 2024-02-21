@@ -43,8 +43,11 @@ UserTable.init(
     hooks: {
       beforeCreate: async (user: UserTable) => {
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(user.password_hash, salt);
-        user.password_hash = hashedPassword;
+        const hashedPassword = await bcrypt.hash(
+          user.dataValues.password_hash,
+          salt,
+        );
+        user.dataValues.password_hash = hashedPassword;
       },
     },
   },
