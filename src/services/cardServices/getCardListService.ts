@@ -48,7 +48,7 @@ const getCardListService = async (card_id: string): Promise<returnObjectType>  =
     }
   } catch (error) {
     console.error(error);
-    return {status:false,message:{error:"Error in fetching card"}}; // Failure
+    return {status:false,message:{error:"Error in fetching card"}}; 
   }
 };
 export default getCardListService;
