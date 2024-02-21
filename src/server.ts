@@ -8,7 +8,7 @@ import cardRoutes from './routes/cardRoutes';
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', cardRoutes);
+app.use('/', cardRoutes);
 app.use('/', profileRoutes);
 
  associations();
