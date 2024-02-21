@@ -12,7 +12,11 @@ const getPendingCardsController = async(req: Request, res: Response): Promise<vo
     if (pendingCardsDetails.hasPendingCards) {
       res.json(pendingCardsDetails);
     } else {
-      res.json({ message: 'No pending cards for the user.' });
+      res.json({
+        hasPendingCards: false,
+        message: 'No pending cards for the user.',
+        pendingCards: [],
+      });
     }
 
   } catch (error) {
