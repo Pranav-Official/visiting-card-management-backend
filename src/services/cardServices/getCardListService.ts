@@ -1,18 +1,22 @@
-import { Request, Response } from 'express';
+
 import { Op } from 'sequelize';
 import Cards from '../../models/cards';
 
-const getCardListService = async (req: Request, res: Response) => {
+type returnObjectType = {
+  status: boolean;
+  message: Object;
+};
+const getCardListService = async (card_id: string): Promise<returnObjectType>  => {
   try {
-    const { card_id } = req.body;
+    
     // Check if the card id is existing in Cards table
     const cardIdFound = await Cards.findOne({
       where: { card_id: card_id },
       raw: true,
     });
-    console.log(cardIdFound);
+    //console.log(cardIdFound);
     if (!cardIdFound) {
-      return res.status(404).json({ error: 'CardId not found' });
+      return {status:false,message:{error:"card id not found"}}
     } else {
       //To get cards under a specific contact
       const cardList = await Cards.findAll({
@@ -39,12 +43,12 @@ const getCardListService = async (req: Request, res: Response) => {
         job_title: card.job_title,
         company_name: card.company_name,
       }));
-
-      return res.status(200).json(response);
+      return {status:true,message:response}
+      
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Error in fetching card' });
+    return {status:false,message:{error:"Error in fetching card"}}; // Failure
   }
 };
 export default getCardListService;
