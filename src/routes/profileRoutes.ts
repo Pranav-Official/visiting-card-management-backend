@@ -1,5 +1,5 @@
 //getProfile router
-import { Router } from 'express';
+import { Router,Request,Response } from 'express';
 import getProfileController from '../controllers/profileControllers/getProfileController';
 
 const router = Router();

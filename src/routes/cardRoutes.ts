@@ -1,5 +1,7 @@
 import { Router, Request, Response } from 'express';
 
+import getPendingCardsController from '../controllers/cardControllers/getPendingCardsController';
+
 import getCardListController from '../controllers/cardControllers/getCardListController';
 import deleteCardController from '../controllers/cardControllers/deleteCardController';
 import editCardDetails from '../controllers/cardControllers/editCardDetails';
@@ -9,6 +11,7 @@ import addToExistingContactController from '../controllers/cardControllers/addTo
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
+
 
 
 
@@ -36,6 +39,11 @@ router.post('/addToExistingContact', async (req: Request, res: Response) => {
   addToExistingContactController(req, res);
 });
 
+
+router.get('/getPendingCardList', async (req: Request, res: Response) => {
+  getPendingCardsController(req, res);
+});
+
 router.get('/getSearchList', async (req: Request, res: Response) => {
   await getSearchableListController(req, res);
 });
@@ -50,4 +58,5 @@ router.patch('/deleteCard',async(req:Request,res:Response)=>{
 router.patch('/editCard', async (req: Request, res: Response) => {
   editCardDetails(req, res);
 });
+
 export default router;

@@ -9,7 +9,7 @@ const editCardDetails = async (req: Request, res: Response) => {
       if (createCard != 0) {
         return res
           .status(200)
-          .json({ message: 'New card creation in successfull' });
+          .json({ message: 'card edit successfull' });
       } else
         return res
           .status(400)
