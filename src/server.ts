@@ -23,6 +23,6 @@ sequelize
     console.log('An error occured', err);
   });
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log(`Server started successfully on PORT 3000`);
 });

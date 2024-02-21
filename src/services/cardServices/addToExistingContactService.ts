@@ -51,8 +51,6 @@ const addToExistingContactService = async (
     return false;
   }
 
-  // Add a default return statement -----> By devapriya
-  return res.status(500).json({ error: 'Unexpected error occurred' });
 
 };
 

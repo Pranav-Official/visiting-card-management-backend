@@ -10,7 +10,7 @@ const getContactListController = async(req:Request,res:Response)=>{
             return res.status(400).json("user_id is missing")
         }
         const contactList = await getContactListService(user_id);
-        return res.status(200).json({data:contactList});
+        return res.status(200).json(contactList);
     }
     catch(error){
         return res.status(401).json("cannot return contact list");
