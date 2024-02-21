@@ -2,13 +2,14 @@ import { Router, Request, Response } from 'express';
 
 import getCardListController from '../controllers/cardControllers/getCardListController';
 import deleteCardController from '../controllers/cardControllers/deleteCardController';
-
+import editCardDetails from '../controllers/cardControllers/editCardDetails';
 import createNewCardController from '../controllers/cardControllers/createNewCard';
 import getSimilarCardController from '../controllers/cardControllers/getSimilarCardController';
 import addToExistingContactController from '../controllers/cardControllers/addToExistingCardController';
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
+
 
 
 const router = Router();
@@ -46,4 +47,7 @@ router.patch('/deleteCard',async(req:Request,res:Response)=>{
     deleteCardController(req,res);
 })
 
+router.patch('/editCard', async (req: Request, res: Response) => {
+  editCardDetails(req, res);
+});
 export default router;
