@@ -4,14 +4,14 @@ import profileRoutes from '../src/routes/profileRoutes';
 import cardRoutes from './routes/cardRoutes';
 
 //import Cards from './models/cards';
-// import associations from './models/associations';
+ import associations from './models/associations';
 
 const app: Express = express();
 app.use(express.json());
 app.use('/', cardRoutes);
 app.use('/', profileRoutes);
 
-// associations();
+ associations();
 app.use(express.json());
 
 sequelize
