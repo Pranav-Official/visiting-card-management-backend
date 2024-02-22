@@ -25,7 +25,7 @@ const getUserListService = async (user_id: string): Promise<returnObjectType>  =
         raw: true
     });
     
-      // Extracting properties from each card
+      // Extracting details from users List
       const response = usersList.map((user:any) => ({
         user_id: user.user_id,
         user_fullname: user.user_fullname,
