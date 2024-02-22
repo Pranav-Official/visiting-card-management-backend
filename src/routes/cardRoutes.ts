@@ -13,6 +13,8 @@ import getContactListController from '../controllers/cardControllers/getContactL
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
 import shareCardController from '../controllers/cardControllers/shareCardController';
 import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
+import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
+
 
 const router = Router();
 //API end point to get contact list in homepage
@@ -58,10 +60,15 @@ router.patch('/editCard', async (req: Request, res: Response) => {
 router.get('/shareCard', async (req: Request, res: Response) => {
   shareCardController(req, res);
 });
+
 router.post(
   '/addSharedCardToExistingContact',
   async (req: Request, res: Response) => {
     addSharedCardToExistingContactController(req, res);
   },
 );
+
+router.get('/getCardDetails',async(req:Request,res:Response) =>{
+  getCardDetailsController(req,res);
+});
 export default router;
