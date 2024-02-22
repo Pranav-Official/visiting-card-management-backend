@@ -15,6 +15,8 @@ export class SharedCards extends Model<SharedCardType> {
   status: string;
   createdAt: Date;
   modifiedAt: Date;
+  Card: any;
+  UserTable: any;
 }
 
 export default SharedCards;
