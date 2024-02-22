@@ -11,6 +11,7 @@ import addToExistingContactController from '../controllers/cardControllers/addTo
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
+import shareCardController from '../controllers/cardControllers/shareCardController';
 import acceptCardController from '../controllers/cardControllers/acceptCard';
 
 
@@ -48,7 +49,7 @@ router.get('/getPendingCardList', async (req: Request, res: Response) => {
 router.get('/getSearchList', async (req: Request, res: Response) => {
   await getSearchableListController(req, res);
 });
-// Call the controller function to handle the request
+
 router.get('/getSimilarCards', async (req: Request, res: Response) => {
   getSimilarCardController(req, res);
 });
@@ -59,7 +60,9 @@ router.patch('/deleteCard',async(req:Request,res:Response)=>{
 router.patch('/editCard', async (req: Request, res: Response) => {
   editCardDetails(req, res);
 });
-
+router.get('/shareCard',async(req:Request,res:Response)=>{
+  shareCardController(req,res);
+});
 router.post('/acceptCard', async (req: Request, res:Response)=>{
   acceptCardController(req, res);
 })
