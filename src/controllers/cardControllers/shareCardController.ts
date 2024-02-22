@@ -6,7 +6,7 @@ const shareCardController = async(req: Request, res: Response) => {
         const {card_id,user_id} = req.body;
        
  
-        const shareCard = await shareCardService(card_id,user_id);
+        const shareCard = await shareCardService(card_id,user_id); //To pass the card_id and user_id to sharedCardService 
         if(shareCard.status){
             return res.status(200).send(shareCard.message);
         }

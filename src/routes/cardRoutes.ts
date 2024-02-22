@@ -47,7 +47,7 @@ router.get('/getPendingCardList', async (req: Request, res: Response) => {
 router.get('/getSearchList', async (req: Request, res: Response) => {
   await getSearchableListController(req, res);
 });
-// Call the controller function to handle the request
+
 router.get('/getSimilarCards', async (req: Request, res: Response) => {
   getSimilarCardController(req, res);
 });

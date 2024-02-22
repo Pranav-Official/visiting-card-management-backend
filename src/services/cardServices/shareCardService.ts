@@ -10,7 +10,7 @@ type returnObjectType = {
 const shareCardService = async (card_id: string,user_id:string): Promise<returnObjectType> => {
 
   try {
-    // Find the card with the provided card_id and user_id
+    // Find the card with the provided card_id 
     const cardToShare = await Cards.findOne({
       where: { card_id: card_id },
       raw: true,
@@ -21,13 +21,10 @@ const shareCardService = async (card_id: string,user_id:string): Promise<returnO
       return {status:false,message:"Card Id not found"}
     }
 
-    // Update user_id to null
-    await SharedCards.create({ user_id: user_id,card_id:card_id });
+    // To create a new entry in SharedCards table
+    await SharedCards.create({ card_id:card_id,user_id:user_id });
 
-    // If parent_card_id of the updated card is null, find the next card with the same user_id
-    
-
-    return {status:true,message:"Card shared successfully"}; // Success
+   return {status:true,message:"Card shared successfully"}; // Success
   } catch (error) {
     console.error('Error in sharing card:', error);
     return {status:false,message:"Error in sharing card"}; // Failure
