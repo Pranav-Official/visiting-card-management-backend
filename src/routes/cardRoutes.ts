@@ -12,6 +12,7 @@ import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
 import shareCardController from '../controllers/cardControllers/shareCardController';
+import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 
 
 
@@ -60,5 +61,9 @@ router.patch('/editCard', async (req: Request, res: Response) => {
 });
 router.get('/shareCard',async(req:Request,res:Response)=>{
   shareCardController(req,res);
+});
+
+router.get('/getCardDetails',async(req:Request,res:Response) =>{
+  getCardDetailsController(req,res);
 });
 export default router;
