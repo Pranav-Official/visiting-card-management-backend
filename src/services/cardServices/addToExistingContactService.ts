@@ -50,8 +50,6 @@ const addToExistingContactService = async (
   } catch {
     return false;
   }
-
-
 };
 
 export default addToExistingContactService;

@@ -12,7 +12,8 @@ import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
 import shareCardController from '../controllers/cardControllers/shareCardController';
-
+import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
+import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 
 
 const router = Router();
@@ -34,11 +35,9 @@ router.get('/getAcceptedCardList', async (req: Request, res: Response) => {
   getAcceptedCards(req, res);
 });
 
-
 router.post('/addToExistingContact', async (req: Request, res: Response) => {
   addToExistingContactController(req, res);
 });
-
 
 router.get('/getPendingCardList', async (req: Request, res: Response) => {
   getPendingCardsController(req, res);
@@ -51,14 +50,25 @@ router.get('/getSearchList', async (req: Request, res: Response) => {
 router.get('/getSimilarCards', async (req: Request, res: Response) => {
   getSimilarCardController(req, res);
 });
-router.patch('/deleteCard',async(req:Request,res:Response)=>{
-    deleteCardController(req,res);
-})
+router.patch('/deleteCard', async (req: Request, res: Response) => {
+  deleteCardController(req, res);
+});
 
 router.patch('/editCard', async (req: Request, res: Response) => {
   editCardDetails(req, res);
 });
-router.get('/shareCard',async(req:Request,res:Response)=>{
-  shareCardController(req,res);
+router.get('/shareCard', async (req: Request, res: Response) => {
+  shareCardController(req, res);
+});
+
+router.post(
+  '/addSharedCardToExistingContact',
+  async (req: Request, res: Response) => {
+    addSharedCardToExistingContactController(req, res);
+  },
+);
+
+router.get('/getCardDetails',async(req:Request,res:Response) =>{
+  getCardDetailsController(req,res);
 });
 export default router;
