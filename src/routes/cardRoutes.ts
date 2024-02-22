@@ -11,7 +11,7 @@ import addToExistingContactController from '../controllers/cardControllers/addTo
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
-
+import shareCardController from '../controllers/cardControllers/shareCardController';
 
 
 
@@ -58,5 +58,7 @@ router.patch('/deleteCard',async(req:Request,res:Response)=>{
 router.patch('/editCard', async (req: Request, res: Response) => {
   editCardDetails(req, res);
 });
-
+router.get('/shareCard',async(req:Request,res:Response)=>{
+  shareCardController(req,res);
+});
 export default router;
