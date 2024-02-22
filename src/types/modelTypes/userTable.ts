@@ -14,6 +14,7 @@ export class UserTable extends Model<UserTableType> {
   user_email: string | null;
   createdAt: Date | null;
   modifiedAt: Date | null;
+  static user_id: any;
 }
 
 export default UserTable;
