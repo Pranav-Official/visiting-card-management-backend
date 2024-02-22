@@ -63,7 +63,7 @@ router.get('/shareCard',async(req:Request,res:Response)=>{
   shareCardController(req,res);
 });
 
-router.get('/getCardDetails'),async(req:Request,res:Response) =>{
+router.get('/getCardDetails',async(req:Request,res:Response) =>{
   getCardDetailsController(req,res);
-}
+});
 export default router;

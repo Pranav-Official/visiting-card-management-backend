@@ -1,4 +1,5 @@
 import { Response ,Request} from 'express';
+import getCardDetailsService from '../../services/cardServices/getCardDetailsService';
 
 const getCardDetailsController =async(req:Request,res:Response) =>{
     try{
