@@ -33,7 +33,7 @@ const getSimilarCardsService = async (
     // Grouping similar cards by parent card ID
     let groupedContacts: Record<string, any> = {};
 
-    // First pass: group by parent card ID and collect child cards with null contact name
+    //group by parent card ID and collect child cards with null contact name
     for (const contact of contacts) {
       const parentCardId = contact.parent_card_id;
       if (parentCardId === null) {
@@ -48,12 +48,12 @@ const getSimilarCardsService = async (
               email: contact.email,
               phone: contact.phone,
             },
-          ], // Initialize cards array
+          ], // Initialize cards array, includes parent card
         };
       } else {
-        // Child card without contact name found, needs to find its parent card
+        // find parent card for child cards without contact name found
         if (!groupedContacts[parentCardId]) {
-          // If the parent card hasn't been encountered yet, find it in the 'Cards' table
+          // find parent card from the 'Cards' table
           const parentCard = await Cards.findOne({
             where: { card_id: parentCardId, user_id: user_id },
             raw: true,
@@ -69,7 +69,7 @@ const getSimilarCardsService = async (
                   email: parentCard.email,
                   phone: parentCard.phone,
                 },
-              ], // Initialize cards array
+              ],
             };
           }
         }
@@ -85,7 +85,7 @@ const getSimilarCardsService = async (
       }
     }
 
-    // Convert the groupedContacts object to the desired format
+    // Converting the groupedContacts object to the desired format
     const response = Object.keys(groupedContacts).map((key) => {
       return {
         contact_name: groupedContacts[key].contact_name,
