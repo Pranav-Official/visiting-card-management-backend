@@ -9,6 +9,7 @@ import addToExistingContactController from '../controllers/cardControllers/addTo
 import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
+import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 
 
 
@@ -50,4 +51,8 @@ router.patch('/deleteCard',async(req:Request,res:Response)=>{
 router.patch('/editCard', async (req: Request, res: Response) => {
   editCardDetails(req, res);
 });
+
+router.get('/getCardDetails'),async(req:Request,res:Response) =>{
+  getCardDetailsController(req,res);
+}
 export default router;
