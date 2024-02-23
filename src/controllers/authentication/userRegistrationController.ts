@@ -16,10 +16,10 @@ const userResgistrationController = async (req: Request, res: Response) => {
       password,
     );
 
-    if (returnedValue == true) {
-      return res.status(200).json({ message: 'User Registered Successfully' });
+    if (returnedValue.status == true) {
+      return res.status(200).json(returnedValue);
     } else {
-      return res.status(402).json({ error: 'UNABLE TO CREATE USER!!!' });
+      return res.status(402).json(returnedValue);
     }
   } catch (error) {
     return res.status(402).json({ error: error });
