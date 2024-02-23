@@ -16,6 +16,7 @@ const userLoginService = async (user_email, password) => {
       existingUser &&
       bcrypt.compareSync(password, existingUser.password_hash)
     ) {
+      // generating new jwt token
       const token = jwt.sign(
         {
           user_id: existingUser.user_id,
