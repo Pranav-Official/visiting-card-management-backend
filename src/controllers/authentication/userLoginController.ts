@@ -18,10 +18,10 @@ const userLoginController = async (req: Request, res: Response) => {
         message: 'User logged in successfully',
       });
     } else {
-      return res.status(402).json({ message: returnedValue.message });
+      return res.status(401).json({ message: returnedValue.message });
     }
   } catch (error) {
-    return res.status(402).json({ error: error });
+    return res.status(401).json({ error: error });
   }
 };
 

@@ -4,7 +4,7 @@ import UserTable from '../models/userTable';
 import 'dotenv/config';
 
 const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.body.user_id) {
+  if (!req.body.user_id || !req.query.user_id) {
     return res
       .status(401)
       .json({ message: 'Unauthorized No user ID provided' });
