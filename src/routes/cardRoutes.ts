@@ -14,9 +14,6 @@ import getSearchableListController from '../controllers/cardControllers/getSearc
 import shareCardController from '../controllers/cardControllers/shareCardController';
 import acceptCardController from '../controllers/cardControllers/acceptCard';
 
-
-
-
 const router = Router();
 //API end point to get contact list in homepage
 router.get('/getContactList', async (req: Request, res: Response) => {
@@ -36,11 +33,9 @@ router.get('/getAcceptedCardList', async (req: Request, res: Response) => {
   getAcceptedCards(req, res);
 });
 
-
 router.post('/addToExistingContact', async (req: Request, res: Response) => {
   addToExistingContactController(req, res);
 });
-
 
 router.get('/getPendingCardList', async (req: Request, res: Response) => {
   getPendingCardsController(req, res);
