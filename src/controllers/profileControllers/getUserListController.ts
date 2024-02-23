@@ -3,7 +3,7 @@ import { Request, Response } from "express";
  
 const getUserListController = async(req: Request, res: Response) => {
     try{
-        const {user_id} = req.body;
+        const {user_id} = req.query;
           const getUserList=await  getUserListService(user_id);
           if(getUserList.status){
           return res.status(200).send(getUserList.message);
