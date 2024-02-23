@@ -13,6 +13,8 @@ const acceptCardService = async ({ cardData, card_id }:  AcceptCardParams) => {
     const oldCardId = card_id;
     const success = await createNewCardService(cardData);
      console.log('cardData:',cardData);
+     console.log('oldCardId:',oldCardId);
+     console.log('card_id:',card_id);
    
     if (success.success) {
       const cardId = success.card_id;
@@ -24,6 +26,7 @@ const acceptCardService = async ({ cardData, card_id }:  AcceptCardParams) => {
         attributes: ['user_id'],
         where: { card_id: oldCardId },
       });
+      console.log('user_id',user_id)
 
       //Change the shared_or_not status in cards table
       await Cards.update(
