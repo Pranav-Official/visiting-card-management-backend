@@ -11,7 +11,7 @@ router.post('/userRegistration', async (req: Request, res: Response) => {
 });
 
 
-router.get('/userLogin', async (req: Request, res: Response) => {
+router.post('/userLogin', async (req: Request, res: Response) => {
   userLoginController(req, res);
 });
 
