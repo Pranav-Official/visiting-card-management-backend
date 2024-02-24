@@ -12,10 +12,12 @@ const getProfileService = async (user_id: string) => {
       },
       raw: true,
     });
-
-    // Logging user details
-    console.log(user);
-
+    if (!user) {
+      return {
+        error: 'User not found! Please check your email address and try again.',
+        status: false,
+      };
+    }
     // Counting total contacts
     const totalContacts = await Cards.count({
       where: {
@@ -47,10 +49,11 @@ const getProfileService = async (user_id: string) => {
       totalContacts: totalContacts,
       totalAcceptedCards: acceptedCards,
       totalPendingCards: pendingCards,
+      message: 'Successfully returned profile details',
     };
   } catch (error) {
     console.error(error);
-    throw new Error('Cannot get profile');
+    return { error: error, status: false };
   }
 };
 
