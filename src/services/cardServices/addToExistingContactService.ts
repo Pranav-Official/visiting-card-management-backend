@@ -40,15 +40,15 @@ const addToExistingContactService = async (
       });
 
       if (createdCard) {
-        return true;
+        return { message: 'Card Added Successfully!', status: true };
       } else {
-        return false;
+        return { error: 'Failed To Add Card', status: false };
       }
     } else {
-      return false;
+      return { error: 'Parent Card Not Found!', status: false };
     }
-  } catch {
-    return false;
+  } catch (error) {
+    return { error: error, status: false };
   }
 };
 
