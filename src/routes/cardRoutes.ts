@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
 
 import getPendingCardsController from '../controllers/cardControllers/getPendingCardsController';
-
 import getCardListController from '../controllers/cardControllers/getCardListController';
 import deleteCardController from '../controllers/cardControllers/deleteCardController';
 import editCardDetails from '../controllers/cardControllers/editCardDetails';
@@ -15,6 +14,7 @@ import shareCardController from '../controllers/cardControllers/shareCardControl
 import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
 import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 import chnageContactNameController from '../controllers/cardControllers/changeContactNameController';
+
 
 const router = Router();
 //API end point to get contact list in homepage
@@ -75,5 +75,6 @@ router.get('/getCardDetails', async (req: Request, res: Response) => {
 router.post('/changeContactName', async (req: Request, res: Response) => {
   chnageContactNameController(req, res);
 });
+
 
 export default router;
