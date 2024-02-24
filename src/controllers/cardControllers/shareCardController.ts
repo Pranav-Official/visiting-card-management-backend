@@ -3,10 +3,10 @@ import { Request, Response } from "express";
  
 const shareCardController = async(req: Request, res: Response) => {
     try{
-        const {card_id,user_id} = req.body;
-       
+        const card_id= req.query.card_id as string;
+       const receiver_user_id=req.query.receiver_user_id as string;
  
-        const shareCard = await shareCardService(card_id,user_id); //To pass the card_id and user_id to sharedCardService 
+        const shareCard = await shareCardService(card_id,receiver_user_id); //To pass the card_id and user_id to sharedCardService 
         if(shareCard.status){
             return res.status(200).send(shareCard.message);
         }

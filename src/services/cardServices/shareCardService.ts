@@ -7,7 +7,7 @@ type returnObjectType = {
     message: string;
   };
 
-const shareCardService = async (card_id: string,user_id:string): Promise<returnObjectType> => {
+const shareCardService = async (card_id: string,receiver_user_id:string): Promise<returnObjectType> => {
 
   try {
     // Find the card with the provided card_id 
@@ -22,7 +22,7 @@ const shareCardService = async (card_id: string,user_id:string): Promise<returnO
     }
 
     // To create a new entry in SharedCards table
-    await SharedCards.create({ card_id:card_id,user_id:user_id });
+    await SharedCards.create({ card_id:card_id,user_id:receiver_user_id });
 
    return {status:true,message:"Card shared successfully"}; // Success
   } catch (error) {

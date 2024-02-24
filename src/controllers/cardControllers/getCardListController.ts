@@ -3,7 +3,7 @@ import { Request, Response } from "express";
  
 const getCardListController = async(req: Request, res: Response) => {
     try{
-        const {card_id} = req.body;
+        const card_id= req.query.card_id as string;
           const getCardList=await  getCardListService(card_id);
           if(getCardList.status){
           return res.status(200).send(getCardList.message);
