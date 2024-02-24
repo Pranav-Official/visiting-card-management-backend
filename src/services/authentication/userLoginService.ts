@@ -29,17 +29,21 @@ const userLoginService = async (user_email, password) => {
       return {
         status: true,
         token: token,
+        user_id: existingUser.user_id,
+        message: 'Login successful',
       };
     } else {
       return {
         status: false,
         message: 'Invalid credentials',
+        user_id: null,
       };
     }
   } catch (error) {
     return {
       status: false,
       message: error.message,
+      user_id: null,
     };
   }
 };
