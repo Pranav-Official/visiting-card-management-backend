@@ -6,11 +6,11 @@ const getContactListService = async (user_id: string) => {
     const list = await Cards.findAll({
       where: { user_id: user_id, parent_card_id: null },
       attributes: ['contact_name', 'card_id'],
+      raw:true,
     });
     return list;
   } catch (error) {
-    throw new Error('Cannot return contact list');
+    return 'Error fetching contact list: Cannot return contact list';
   }
 };
-
 export default getContactListService;

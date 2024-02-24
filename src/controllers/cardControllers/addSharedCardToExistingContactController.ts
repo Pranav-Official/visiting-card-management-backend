@@ -16,14 +16,14 @@ const addToExistingContactController = async (req: Request, res: Response) => {
       parent_card_id,
     );
 
-    if (returnedValue == true) {
-      return res.status(200).json({ message: 'Card Added Successfully!' });
+    if (returnedValue.status == true) {
+      return res.status(200).json(returnedValue);
     } else {
-      return res.status(402).json({ error: 'Unable to Add Card!!!' });
+      return res.status(400).json(returnedValue);
     }
   } catch (error) {
     return res
-      .status(402)
+      .status(400)
       .json({ error: 'An error occurred while adding the card.' + error });
   }
 };
