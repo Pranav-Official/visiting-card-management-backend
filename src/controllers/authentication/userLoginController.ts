@@ -1,11 +1,17 @@
 import { Request, Response } from 'express';
 import userLoginService from '../../services/authentication/userLoginService';
+import { validateEmail } from '../../utils/regexChecks';
 
 const userLoginController = async (req: Request, res: Response) => {
   const { user_email, password } = req.body;
 
   if (!user_email || !password) {
     return res.status(402).json({ error: 'Please Enter All the Details' });
+  }
+
+  const emailValidity = validateEmail(user_email);
+  if (!emailValidity) {
+    return res.status(402).json({ error: 'Please Enter a Valid Email' });
   }
 
   try {
