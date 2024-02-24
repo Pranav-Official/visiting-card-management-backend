@@ -28,7 +28,6 @@ const getSimilarCardsService = async (
       ],
       raw: true,
     });
-    console.log(contacts);
 
     // Grouping similar cards by parent card ID
     let groupedContacts: Record<string, any> = {};
@@ -92,12 +91,17 @@ const getSimilarCardsService = async (
         cards: groupedContacts[key].cards,
       };
     });
-
+    console.log(response);
     // Return the list of similar contacts with cards grouped under their respective contacts.
-    return response;
+    if (response.length != 0) return { response: response, status: true };
+    else
+      return {
+        error: 'No similar cards found',
+        status: false,
+      };
   } catch (error) {
     console.error(error);
-    throw new Error('No similar cards found');
+    return { error: error, status: false };
   }
 };
 

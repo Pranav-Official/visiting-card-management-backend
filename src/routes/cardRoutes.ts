@@ -11,9 +11,11 @@ import getAcceptedCards from '../controllers/cardControllers/getAcceptedCards';
 import getContactListController from '../controllers/cardControllers/getContactList';
 import getSearchableListController from '../controllers/cardControllers/getSearchableList';
 import shareCardController from '../controllers/cardControllers/shareCardController';
+import acceptCardController from '../controllers/cardControllers/acceptCard';
 import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
 import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 import chnageContactNameController from '../controllers/cardControllers/changeContactNameController';
+
 
 
 const router = Router();
@@ -46,7 +48,7 @@ router.get('/getPendingCardList', async (req: Request, res: Response) => {
 router.get('/getSearchList', async (req: Request, res: Response) => {
   await getSearchableListController(req, res);
 });
-
+//API Endpoint to get similar Cards
 router.get('/getSimilarCards', async (req: Request, res: Response) => {
   getSimilarCardController(req, res);
 });
@@ -75,6 +77,10 @@ router.get('/getCardDetails', async (req: Request, res: Response) => {
 router.post('/changeContactName', async (req: Request, res: Response) => {
   chnageContactNameController(req, res);
 });
+
+router.post('/acceptCard', async (req: Request, res:Response)=>{
+  acceptCardController(req, res);
+})
 
 
 export default router;
