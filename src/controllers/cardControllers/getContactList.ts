@@ -5,7 +5,7 @@ import getContactListService from "../../services/cardServices/getContactListSer
 const getContactListController = async(req:Request,res:Response)=>{
 
     try{
-        const {user_id} = req.body;
+        const user_id = req.query.user_id as string;
         if(!user_id){
             return res.status(400).json("user_id is missing")
         }

@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
 
 import getPendingCardsController from '../controllers/cardControllers/getPendingCardsController';
-
 import getCardListController from '../controllers/cardControllers/getCardListController';
 import deleteCardController from '../controllers/cardControllers/deleteCardController';
 import editCardDetails from '../controllers/cardControllers/editCardDetails';
@@ -14,6 +13,7 @@ import getSearchableListController from '../controllers/cardControllers/getSearc
 import shareCardController from '../controllers/cardControllers/shareCardController';
 import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
 import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
+import chnageContactNameController from '../controllers/cardControllers/changeContactNameController';
 
 
 const router = Router();
@@ -68,7 +68,13 @@ router.post(
   },
 );
 
-router.get('/getCardDetails',async(req:Request,res:Response) =>{
-  getCardDetailsController(req,res);
+router.get('/getCardDetails', async (req: Request, res: Response) => {
+  getCardDetailsController(req, res);
 });
+
+router.post('/changeContactName', async (req: Request, res: Response) => {
+  chnageContactNameController(req, res);
+});
+
+
 export default router;

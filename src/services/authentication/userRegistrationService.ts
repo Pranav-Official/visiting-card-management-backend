@@ -1,4 +1,5 @@
 import UserTable from '../../models/userTable';
+import userLoginService from './userLoginService';
 
 //User Registration Service
 const userRegistrationService = async (user_fullname, user_email, password) => {
@@ -9,7 +10,11 @@ const userRegistrationService = async (user_fullname, user_email, password) => {
   });
 
   if (existingUser != null) {
-    return { error: 'User Already Exists', status: false };
+    return {
+      status: false,
+      message: 'user with same email id already exists, please login',
+      user_id: null,
+    };
   }
 
   try {
@@ -19,12 +24,22 @@ const userRegistrationService = async (user_fullname, user_email, password) => {
       { raw: true },
     );
     if (createUser) {
-      return { message: 'User Registered Successfully', status: true };
+      const returnedValue = await userLoginService(user_email, password);
+      returnedValue.message = 'user registration successful';
+      return returnedValue;
     } else {
-      return { error: 'Unable to Create User', status: false };
+      return {
+        status: false,
+        message: 'user registration failed',
+        user_id: null,
+      };
     }
   } catch (error) {
-    return { error: error };
+    return {
+      status: false,
+      message: 'user registration failed' + error,
+      user_id: null,
+    };
   }
 };
 

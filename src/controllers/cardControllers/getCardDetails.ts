@@ -3,14 +3,19 @@ import getCardDetailsService from '../../services/cardServices/getCardDetailsSer
 
 const getCardDetailsController =async(req:Request,res:Response) =>{
     try{
-        const {card_id} = req.body;
+        const card_id = req.query.card_id as string;
         if(!card_id){
             return res.status(400).json("card_id is missing")
         }
 
         const cardDetails = await getCardDetailsService(card_id);
-        return res.status(200).json(cardDetails);
+        if(cardDetails.status){
+            return res.status(200).json(cardDetails.message);
+        }
+        else{
+            return res.status(400).json(cardDetails.message);
 
+        }
     }
     catch(error){
         return res.status(401).json("cannot return card details");
