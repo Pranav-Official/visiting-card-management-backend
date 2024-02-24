@@ -25,7 +25,7 @@ export const getAcceptedCardsService = async (user_id: string) => {
     });
     return acceptedCards;
   } catch (err) {
-    return null;
+    return { error: err };
   }
 };
 

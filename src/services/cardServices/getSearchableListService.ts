@@ -32,11 +32,12 @@ const getSearchableListService = async (user_id:string) => {
         };
       }),
     );
+    
 
     return(mainCardDetails);
   } 
   catch (error) {
-    throw new Error('Cannot return contact list');    
+    return(error);    
   }
 };
 
