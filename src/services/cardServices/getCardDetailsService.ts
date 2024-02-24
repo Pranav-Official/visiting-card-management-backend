@@ -7,19 +7,19 @@ type ReturnObject = {
 
 const getCardDetailsService = async (card_id: string): Promise<ReturnObject> => {
   try {
-    const list = await Cards.findOne({
+    const card = await Cards.findOne({
       where: { card_id: card_id },
       attributes: ['card_name', 'img_front_link', 'img_back_link', 'job_title', 'email', 'phone', 'company_name', 'company_website', 'description'],
       raw: true 
     });
 
-    if (list === null) {
+    if (card === null) {
       return { status: false, message: { error: "Card ID not found" } };
     } else {
-      return { status: true, message: list };
+      return { status: true, message: card };
     }
   } catch (error) {
-    console.error("Error in getCardDetailsService:", error);
+    
     return { status: false, message: { error: "Unable to fetch card details" } };
   }
 };
