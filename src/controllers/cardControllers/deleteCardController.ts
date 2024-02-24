@@ -3,7 +3,7 @@ import { Request, Response } from "express";
  
 const deleteCardController = async(req: Request, res: Response) => {
     try{
-        const {card_id} = req.body;
+        const card_id = req.body.card_id as string;
        
  
         const deleteCard = await deleteCardService(card_id);
