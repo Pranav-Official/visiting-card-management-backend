@@ -9,8 +9,7 @@ const changePasswordController = async (req: Request, res: Response) => {
     // Checking if any of the required parameters are missing
     if (!email || !new_password) {
       return res.status(400).json({
-        error:
-          'Bad Request: Please provide user_id, card_name, phone, and email',
+        error: 'Please provide necessary credentials',
       });
     }
 
@@ -20,8 +19,10 @@ const changePasswordController = async (req: Request, res: Response) => {
       new_password,
     );
 
-    // Sending the changed password details in the response
-    return res.status(200).json(changedPasswordDetails);
+    // Sending the changed password details in the response if successful
+    if (changedPasswordDetails.status === true)
+      return res.status(200).json(changedPasswordDetails);
+    else return res.status(400).json(changedPasswordDetails);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Internal Server Error' });

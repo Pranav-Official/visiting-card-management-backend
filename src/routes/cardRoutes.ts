@@ -48,7 +48,7 @@ router.get('/getPendingCardList', async (req: Request, res: Response) => {
 router.get('/getSearchList', async (req: Request, res: Response) => {
   await getSearchableListController(req, res);
 });
-
+//API Endpoint to get similar Cards
 router.get('/getSimilarCards', async (req: Request, res: Response) => {
   getSimilarCardController(req, res);
 });
