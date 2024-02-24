@@ -13,12 +13,9 @@ const userLoginController = async (req: Request, res: Response) => {
     const returnedValue = await userLoginService(user_email, password);
 
     if (returnedValue.status == true) {
-      return res.status(200).json({
-        token: returnedValue.token,
-        message: 'User logged in successfully',
-      });
+      return res.status(200).json(returnedValue);
     } else {
-      return res.status(401).json({ message: returnedValue.message });
+      return res.status(401).json(returnedValue);
     }
   } catch (error) {
     return res.status(401).json({ error: error });
