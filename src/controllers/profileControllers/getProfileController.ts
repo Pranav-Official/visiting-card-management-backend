@@ -5,7 +5,7 @@ import getProfileService from '../../services/profile/getProfileService';
 const getProfileController = async (req: Request, res: Response) => {
   try {
     // Extracting user_id from the request query
-    const { user_id } = req.query;
+    const user_id = req.query.user_id as string;
 
     if (!user_id) {
       return res.status(400).json({
