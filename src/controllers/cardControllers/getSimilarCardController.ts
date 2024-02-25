@@ -4,7 +4,12 @@ import getSimilarCardsService from '../../services/cardServices/getSimilarCardsS
 // Controller function for handling requests to find similar cards
 const getSimilarCardsController = async (req: Request, res: Response) => {
   try {
-    const { user_id, card_name, phone, email } = req.query;
+    const { user_id, card_name, phone, email } = req.query as {
+      user_id: string;
+      card_name: string;
+      phone: string;
+      email: string;
+    };
 
     // Checking if required parameters are missing
     if (!user_id && !card_name && !phone && !email) {
