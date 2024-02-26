@@ -50,6 +50,7 @@ const getProfileService = async (user_id: string) => {
       totalAcceptedCards: acceptedCards,
       totalPendingCards: pendingCards,
       message: 'Successfully returned profile details',
+      status: true,
     };
   } catch (error) {
     console.error(error);

@@ -1,16 +1,11 @@
 import UserTable from '../../models/userTable';
 import bcrypt from 'bcrypt';
 // Function to change password
-const changePasswordService = async (
-  user_id: string,
-  email: string,
-  new_password: string,
-) => {
+const changePasswordService = async (email: string, new_password: string) => {
   try {
     // Finding user details
     const user = await UserTable.findOne({
       where: {
-        user_id: user_id,
         user_email: email,
       },
       raw: true,
@@ -18,7 +13,7 @@ const changePasswordService = async (
     // Check if the user exists
     if (!user) {
       return {
-        error: 'User not found. Please check your email address and try again.',
+        error: 'User not found!',
         status: false,
       };
     }
@@ -32,7 +27,6 @@ const changePasswordService = async (
       { password_hash: hashedPassword },
       {
         where: {
-          user_id: user_id,
           user_email: email,
         },
       },

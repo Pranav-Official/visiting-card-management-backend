@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import changePasswordService from '../../services/profile/changePasswordService';
+import changePasswordService from '../../services/authentication/changePasswordService';
 
 // Controller function for handling requests to change password
 const changePasswordController = async (req: Request, res: Response) => {
   try {
-    const { user_id, email, new_password } = req.body;
+    const { email, new_password } = req.body;
 
     // Checking if any of the required parameters are missing
-    if (!user_id || !email || !new_password) {
+    if (!email || !new_password) {
       return res.status(400).json({
         error: 'Please provide necessary credentials',
       });
@@ -15,7 +15,6 @@ const changePasswordController = async (req: Request, res: Response) => {
 
     // Calling the service to change password
     const changedPasswordDetails = await changePasswordService(
-      user_id,
       email,
       new_password,
     );
