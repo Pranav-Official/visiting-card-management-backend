@@ -10,7 +10,7 @@ import associations from './models/associations';
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', verifyJWT, cardRoutes);
+app.use('/api/v1',  cardRoutes);
 app.use('/api/v1', verifyJWT, profileRoutes);
 app.use('/', authenticationRoutes);
 
