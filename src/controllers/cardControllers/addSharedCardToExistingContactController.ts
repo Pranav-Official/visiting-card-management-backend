@@ -17,9 +17,9 @@ const addToExistingContactController = async (req: Request, res: Response) => {
     );
 
     if (returnedValue.status == true) {
-      return res.status(200).json(returnedValue);
+      return res.status(200).json({ ...returnedValue });
     } else {
-      return res.status(400).json(returnedValue);
+      return res.status(400).json({ ...returnedValue });
     }
   } catch (error) {
     return res

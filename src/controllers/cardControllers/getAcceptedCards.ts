@@ -10,12 +10,12 @@ import getAcceptedCardsService from '../../services/cardServices/getAcceptedCard
 //  */
 
 const getAcceptedCards = async (req: Request, res: Response) => {
-  const { user_id } = req.body;
-  const acceptedCards = await getAcceptedCardsService(user_id);
-  if (acceptedCards[0]) {
-    return res.status(200).json(acceptedCards);
+  const user_id = req.query.user_id as string;
+  const result = await getAcceptedCardsService(user_id);
+  if (result.status) {
+    return res.status(200).json(result);
   }
-  return res.status(400).json('No cards found');
+  return res.status(400).json(result);
 };
 
 export default getAcceptedCards;

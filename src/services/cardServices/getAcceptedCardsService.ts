@@ -23,9 +23,16 @@ export const getAcceptedCardsService = async (user_id: string) => {
       ],
       raw: true,
     });
-    return acceptedCards;
+    return {
+      status: true,
+      data: acceptedCards,
+    };
   } catch (err) {
-    return { error: err };
+    return {
+      status: false,
+      error: err.message,
+      message: 'Unable to fetch card details',
+    };
   }
 };
 
