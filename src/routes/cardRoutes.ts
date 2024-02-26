@@ -16,8 +16,6 @@ import addSharedCardToExistingContactController from '../controllers/cardControl
 import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 import chnageContactNameController from '../controllers/cardControllers/changeContactNameController';
 
-
-
 const router = Router();
 //API end point to get contact list in homepage
 router.get('/getContactList', async (req: Request, res: Response) => {
@@ -59,7 +57,7 @@ router.patch('/deleteCard', async (req: Request, res: Response) => {
 router.patch('/editCard', async (req: Request, res: Response) => {
   editCardDetails(req, res);
 });
-router.get('/shareCard', async (req: Request, res: Response) => {
+router.post('/shareCard', async (req: Request, res: Response) => {
   shareCardController(req, res);
 });
 
@@ -78,9 +76,8 @@ router.post('/changeContactName', async (req: Request, res: Response) => {
   chnageContactNameController(req, res);
 });
 
-router.post('/acceptCard', async (req: Request, res:Response)=>{
+router.post('/acceptCard', async (req: Request, res: Response) => {
   acceptCardController(req, res);
-})
-
+});
 
 export default router;
