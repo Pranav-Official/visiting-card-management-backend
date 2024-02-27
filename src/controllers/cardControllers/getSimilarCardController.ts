@@ -14,8 +14,7 @@ const getSimilarCardsController = async (req: Request, res: Response) => {
     // Checking if required parameters are missing
     if (!user_id && !card_name && !phone && !email) {
       return res.status(400).json({
-        error:
-          'Please provide any of the necessary details -user_id, card_name, phone, and email',
+        error: 'Provide necessary credentials ',
       });
     }
 
