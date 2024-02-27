@@ -7,9 +7,7 @@ const editCardDetails = async (req: Request, res: Response) => {
     if (card_id) {
       const createCard = await editCardService(card_id, updatedCardDetails);
       if (createCard != 0) {
-        return res
-          .status(200)
-          .json({ message: 'card edit successfull' });
+        return res.status(200).json({ message: 'card edit successfull' });
       } else
         return res
           .status(400)
