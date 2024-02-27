@@ -9,25 +9,26 @@ interface AcceptCardParams {
   user_id: string;
 }
 
-const acceptCardService = async ({
-  card_id,
-  user_id,
-}: AcceptCardParams) => {
+const acceptCardService = async ({ card_id, user_id }: AcceptCardParams) => {
   try {
     const oldCardId = card_id;
     const receiverId = user_id;
-    const CardDetails = await Cards.findOne({ where: { card_id: oldCardId },attributes: {exclude: ['user_id']},raw:true });
+    const CardDetails = await Cards.findOne({
+      where: { card_id: oldCardId },
+      attributes: { exclude: ['user_id'] },
+      raw: true,
+    });
 
     if (!CardDetails) {
       console.error('Error retrieving card details from Cards table');
       return { error: 'Error retrieving card details from Cards table' };
     }
 
-    CardDetails.user_id=receiverId;
-    console.log('cardData;',CardDetails);
-    console.log('user_id:',CardDetails.user_id);
-    console.log('New cardData;',CardDetails);
- const success = await createNewCardService(CardDetails);
+    CardDetails.user_id = receiverId;
+    console.log('cardData;', CardDetails);
+    console.log('user_id:', CardDetails.user_id);
+    console.log('New cardData;', CardDetails);
+    const success = await createNewCardService(CardDetails);
 
     if (success.success) {
       const cardId = success.card_id;
@@ -37,20 +38,19 @@ const acceptCardService = async ({
       //Change the shared_or_not status in cards table
       await Cards.update({ shared_or_not: 1 }, { where: { card_id: cardId } });
 
-        //Update the pending status in sharedCard table
-        const updatedCard = await SharedCards.update(
-          { status: newStatus, modifiedAt: new Date() },
-          { where: { card_id: oldCardId } },
-        );
-        console.log(updatedCard);
+      //Update the pending status in sharedCard table
+      const updatedCard = await SharedCards.update(
+        { status: newStatus, modifiedAt: new Date() },
+        { where: { card_id: oldCardId } },
+      );
+      console.log(updatedCard);
 
-        return updatedCard;
-      } else {
-        console.error('Error retrieving user_id from SharedCards');
-        return { error: 'Error retrieving user_id from SharedCards' };
-      }
-    } 
-   catch (error) {
+      return updatedCard;
+    } else {
+      console.error('Error retrieving user_id from SharedCards');
+      return { error: 'Error retrieving user_id from SharedCards' };
+    }
+  } catch (error) {
     console.error('Error accepting card:', error);
     return { error: error.message };
   }

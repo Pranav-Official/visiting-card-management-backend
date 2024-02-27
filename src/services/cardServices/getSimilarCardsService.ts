@@ -11,11 +11,7 @@ const getSimilarCardsService = async (
     //Finding cards with any of the given details similar in 'Cards' model under the given user.
     const contacts = await Cards.findAll({
       where: {
-        [Op.or]: [
-          { card_name: { [Op.like]: `%${card_name}%` } },
-          { phone: phone },
-          { email: email },
-        ],
+        [Op.or]: [{ card_name: card_name }, { phone: phone }, { email: email }],
         user_id: user_id,
       },
       attributes: [
