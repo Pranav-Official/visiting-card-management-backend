@@ -1,11 +1,7 @@
 import Cards from "../../models/cards";
 
-type ReturnObject = {
-  status: boolean;
-  message: Object;
-};
 
-const getCardDetailsService = async (card_id: string): Promise<ReturnObject> => {
+const getCardDetailsService = async (card_id: string) => {
   try {
     const card = await Cards.findOne({
       where: { card_id: card_id },
@@ -14,13 +10,13 @@ const getCardDetailsService = async (card_id: string): Promise<ReturnObject> => 
     });
 
     if (card === null) {
-      return { status: false, message: { error: "Card ID not found" } };
+      return { status: false, message:"Card ID not found", data:{} };
     } else {
-      return { status: true, message: card };
+      return { status: true, message: "Card found", data: card};
     }
   } catch (error) {
     
-    return { status: false, message: { error: "Unable to fetch card details" } };
+    return { status: false, message:"Unable to fetch card details" ,data: error };
   }
 };
 
