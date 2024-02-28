@@ -13,8 +13,8 @@ const changePasswordService = async (email: string, new_password: string) => {
     // Check if the user exists
     if (!user) {
       return {
-        error: 'User not found!',
         status: false,
+        message: 'User not found!',
       };
     }
 
@@ -38,7 +38,7 @@ const changePasswordService = async (email: string, new_password: string) => {
     };
   } catch (error) {
     console.error(error);
-    return { error: error, status: false };
+    return { status: false, data: error, message: error.message };
   }
 };
 
