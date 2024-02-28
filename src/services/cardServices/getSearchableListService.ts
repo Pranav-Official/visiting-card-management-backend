@@ -9,10 +9,10 @@ const getSearchableListService = async (user_id: string) => {
     });
 
     const mainCardDetails = await Promise.all(mainCards.map(async (mainCard) => {
-      let relatedCardIds = new Set();
-      let emails = new Set();
-      let phoneNumbers = new Set();
-      let companyName = new Set();
+      const relatedCardIds = new Set();
+      const emails = new Set();
+      const phoneNumbers = new Set();
+      const companyName = new Set();
 
       if (mainCard.card_id) {
         emails.add(mainCard.email);

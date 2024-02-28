@@ -2,22 +2,22 @@ import { Response, Request } from "express";
 import getSearchableListService from "../../services/cardServices/getSearchableListService";
 
 // Controller for getSearchableList service
-const getSearchableListController = async (req: Request, res: Response) => {
+const getSearchableListController = async (req: Request, res: Response<responseType>) => {
     try {
         const user_id = req.query.user_id as string;
         if (!user_id) {
-            return res.status(400).json({ status: "error", message: "user_id is missing" });
+            return res.status(400).json({ status: false, message: "user_id is missing",data:{} });
         }
 
         const searchableList = await getSearchableListService(user_id);
 
         if (searchableList.status === "error") {
-            return res.status(400).json({ status: "error", message: "Cannot find a list", error: searchableList.error });
+            return res.status(400).json({ status: false, message: "Cannot find a list", data: searchableList.error });
         } else {
-            return res.status(200).json({ status: "success", message: "Searchable list retrieved successfully", data: searchableList.data });
+            return res.status(200).json({ status: true, message: "Searchable list retrieved successfully", data: searchableList.data });
         }
     } catch (error) {
-        return res.status(500).json({ status: "error", message: "Cannot return searchable list", error: error });
+        return res.status(500).json({ status: false, message: "Cannot return searchable list", data: error });
     }
 };
 

@@ -1,12 +1,7 @@
 import Cards from "../../models/cards";
 
-type ReturnObject = {
-  status: boolean;
-  message: string;
-  data:any;
-};
 
-const getCardDetailsService = async (card_id: string): Promise<ReturnObject> => {
+const getCardDetailsService = async (card_id: string) => {
   try {
     const card = await Cards.findOne({
       where: { card_id: card_id },
