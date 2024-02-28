@@ -1,12 +1,14 @@
-import { Request, Response } from "express";
-import getPendingCardsService from "../../services/cardServices/getPendingCardService";
+import { Request, Response } from 'express';
+import getPendingCardsService from '../../services/cardServices/getPendingCardService';
 
 //Controller to get pending card list
 
-const getPendingCardsController = async(req: Request, res: Response): Promise<void> => {
-
+const getPendingCardsController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = req.query.userId as string;
+    const userId = req.query.user_id as string;
     const pendingCardsDetails = await getPendingCardsService(userId);
 
     if (pendingCardsDetails.hasPendingCards) {
@@ -18,11 +20,10 @@ const getPendingCardsController = async(req: Request, res: Response): Promise<vo
         pendingCards: [],
       });
     }
-
   } catch (error) {
     console.error('Error in cards controller:', error);
-     res.status(500).json({ error: error.message || 'Internal Server Error' });
+    res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
 };
 
-  export default getPendingCardsController;
+export default getPendingCardsController;

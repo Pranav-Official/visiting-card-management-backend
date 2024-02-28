@@ -13,8 +13,8 @@ const changePasswordService = async (email: string, new_password: string) => {
     // Check if the user exists
     if (!user) {
       return {
-        message:
-          'User not found. Please check your email address and try again.',
+        error: 'User not found!',
+        status: false,
       };
     }
 
@@ -31,14 +31,14 @@ const changePasswordService = async (email: string, new_password: string) => {
         },
       },
     );
-
     return {
       user_email: email,
       message: 'Password changed successfully',
+      status: true,
     };
   } catch (error) {
     console.error(error);
-    throw new Error('Cannot change password');
+    return { error: error, status: false };
   }
 };
 

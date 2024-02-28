@@ -4,13 +4,17 @@ import getSimilarCardsService from '../../services/cardServices/getSimilarCardsS
 // Controller function for handling requests to find similar cards
 const getSimilarCardsController = async (req: Request, res: Response) => {
   try {
-    const { user_id, card_name, phone, email } = req.body;
+    const { user_id, card_name, phone, email } = req.query as {
+      user_id: string;
+      card_name: string;
+      phone: string;
+      email: string;
+    };
 
-    // Checking if any of the required parameters are missing
-    if (!user_id || !card_name || !phone || !email) {
+    // Checking if required parameters are missing
+    if (!user_id && !card_name && !phone && !email) {
       return res.status(400).json({
-        error:
-          'Bad Request: Please provide user_id, card_name, phone, and email',
+        error: 'Provide necessary credentials ',
       });
     }
 
@@ -22,11 +26,13 @@ const getSimilarCardsController = async (req: Request, res: Response) => {
       email,
     );
 
-    // Sending the similar card details in the response
-    return res.status(200).json(similarCardDetails);
+    // Sending the similar card details in the response if successful
+    if (similarCardDetails.status == true)
+      return res.status(200).json(similarCardDetails);
+    else return res.status(400).json(similarCardDetails);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 

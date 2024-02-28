@@ -39,16 +39,21 @@ const addSharedCardToExistingContactService = async (
         );
 
         if (updateCardStatus == null) {
-          return false;
+          return {
+            error: 'Failed to Update Shared Card Status',
+            status: false,
+          };
         }
+      } else {
+        return { error: 'Failed To Create Card!', status: false };
       }
 
-      return true;
+      return { message: 'Card Added Successfully', status: true };
     } else {
-      return false;
+      return { error: 'Cannot Find Card!', status: false };
     }
   } catch (error) {
-    return false;
+    return { error: error, status: false };
   }
 };
 

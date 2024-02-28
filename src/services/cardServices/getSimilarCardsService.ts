@@ -11,11 +11,7 @@ const getSimilarCardsService = async (
     //Finding cards with any of the given details similar in 'Cards' model under the given user.
     const contacts = await Cards.findAll({
       where: {
-        [Op.or]: [
-          { card_name: { [Op.like]: `%${card_name}%` } },
-          { phone: phone },
-          { email: email },
-        ],
+        [Op.or]: [{ card_name: card_name }, { phone: phone }, { email: email }],
         user_id: user_id,
       },
       attributes: [
@@ -28,10 +24,9 @@ const getSimilarCardsService = async (
       ],
       raw: true,
     });
-    console.log(contacts);
 
     // Grouping similar cards by parent card ID
-    let groupedContacts: Record<string, any> = {};
+    const groupedContacts: Record<string, any> = {};
 
     //group by parent card ID and collect child cards with null contact name
     for (const contact of contacts) {
@@ -92,12 +87,17 @@ const getSimilarCardsService = async (
         cards: groupedContacts[key].cards,
       };
     });
-
+    console.log(response);
     // Return the list of similar contacts with cards grouped under their respective contacts.
-    return response;
+    if (response.length != 0) return { response: response, status: true };
+    else
+      return {
+        error: 'No similar cards found',
+        status: false,
+      };
   } catch (error) {
     console.error(error);
-    throw new Error('No similar cards found');
+    return { error: error, status: false };
   }
 };
 
