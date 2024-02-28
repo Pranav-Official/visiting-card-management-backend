@@ -10,10 +10,10 @@ const getCardDetailsController =async(req:Request,res:Response) =>{
 
         const cardDetails = await getCardDetailsService(card_id);
         if(cardDetails.status){
-            return res.status(200).json(cardDetails.message);
+            return res.status(200).json(cardDetails);
         }
         else{
-            return res.status(400).json(cardDetails.message);
+            return res.status(400).json(cardDetails);
 
         }
     }

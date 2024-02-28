@@ -1,28 +1,55 @@
-import { Response,Request } from "express";
+import { Response, Request } from "express";
 import getSearchableListService from "../../services/cardServices/getSearchableListService";
 
-
-//controller for getSearchableList service
-const getSearchableListController = async(req:Request,res:Response)=>{
-
-    try{
+// Controller for getSearchableList service
+const getSearchableListController = async (req: Request, res: Response) => {
+    try {
         const user_id = req.query.user_id as string;
-        if(!user_id){
-            return res.status(400).json("user_id is missing")
+        if (!user_id) {
+            return res.status(400).json({ status: "error", message: "user_id is missing" });
         }
 
         const searchableList = await getSearchableListService(user_id);
 
-        if(searchableList===null){
-            return res.status(400).json("cannot find a list")
+        if (searchableList.status === "error") {
+            return res.status(400).json({ status: "error", message: "Cannot find a list", error: searchableList.error });
+        } else {
+            return res.status(200).json({ status: "success", message: "Searchable list retrieved successfully", data: searchableList.data });
         }
-        else{
-            return res.status(200).json(searchableList);
-        }
+    } catch (error) {
+        return res.status(500).json({ status: "error", message: "Cannot return searchable list", error: error });
     }
-    catch(error){
-        return res.status(401).json("cannot return searchable list");
-    }
-}
+};
 
 export default getSearchableListController;
+
+
+
+// import { Response,Request } from "express";
+// import getSearchableListService from "../../services/cardServices/getSearchableListService";
+
+
+// //controller for getSearchableList service
+// const getSearchableListController = async(req:Request,res:Response)=>{
+
+//     try{
+//         const user_id = req.query.user_id as string;
+//         if(!user_id){
+//             return res.status(400).json("user_id is missing")
+//         }
+
+//         const searchableList = await getSearchableListService(user_id);
+
+//         if(searchableList===null){
+//             return res.status(400).json("cannot find a list")
+//         }
+//         else{
+//             return res.status(200).json(searchableList);
+//         }
+//     }
+//     catch(error){
+//         return res.status(401).json("cannot return searchable list");
+//     }
+// }
+
+// export default getSearchableListController;

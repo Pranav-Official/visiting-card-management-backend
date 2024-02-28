@@ -1,51 +1,54 @@
 import Cards from '../../models/cards';
 
-//function to get complete searchable list
-const getSearchableListService = async (user_id:string) => {
+//service to get searchable list
+const getSearchableListService = async (user_id: string) => {
   try {
     const mainCards = await Cards.findAll({
       where: { user_id: user_id, parent_card_id: null },
       raw: true,
     });
 
-    const mainCardDetails = await Promise.all(mainCards.map(async (mainCard) =>{
-        let relatedCardIds = new Set();
-        let emails = new Set();
-        let phoneNumbers = new Set();
-        let companyName = new Set();
+    const mainCardDetails = await Promise.all(mainCards.map(async (mainCard) => {
+      let relatedCardIds = new Set();
+      let emails = new Set();
+      let phoneNumbers = new Set();
+      let companyName = new Set();
 
-        // Check if mainCard has a valid card_id
-        if (mainCard.card_id) {
-          emails.add(mainCard.email);
-          phoneNumbers.add(mainCard.phone);
-          companyName.add(mainCard.company_name)
-          
-          const relatedCards = await Cards.findAll({where: { parent_card_id: mainCard.card_id },raw: true,});
-          relatedCards.forEach((card) => {
-            relatedCardIds.add(card.card_id);
-            emails.add(card.email);
-            phoneNumbers.add(card.phone);
-            companyName.add(card.company_name);
-          });
-        }
+      if (mainCard.card_id) {
+        emails.add(mainCard.email);
+        phoneNumbers.add(mainCard.phone);
+        companyName.add(mainCard.company_name);
+        
+        const relatedCards = await Cards.findAll({ where: { parent_card_id: mainCard.card_id }, raw: true });
+        relatedCards.forEach((card) => {
+          relatedCardIds.add(card.card_id);
+          emails.add(card.email);
+          phoneNumbers.add(card.phone);
+          companyName.add(card.company_name);
+        });
+      }
 
-        return {
-          card_id: mainCard.card_id,
-          email: Array.from(emails),
-          phone_number: Array.from(phoneNumbers),
-          related_cards: Array.from(relatedCardIds),
-          company_Names: Array.from(companyName)
-        };
-      }),
-    );
-    
+      ///extra
+      const emailArray = Array.from(emails).filter(email => email !== null);
+      const phoneNumberArray = Array.from(phoneNumbers).filter(phone => phone !== null);
+      const companyNameArray = Array.from(companyName).filter(company => company !== null);
 
-    return(mainCardDetails);
-  } 
-  catch (error) {
-    return(error);    
+      return {
+        card_id: mainCard.card_id,
+        email: emailArray,
+        phone_number: phoneNumberArray,
+        // related_cards: Array.from(relatedCardIds),
+        company_names: companyNameArray
+      };
+    }));
+
+    return { status: 'success', message: 'Searchable list retrieved successfully.', data: mainCardDetails };
+  } catch (error) {
+    return { status: 'error', message: 'Failed to retrieve searchable list.', error: error };
   }
 };
 
 export default getSearchableListService;
+
+
 
