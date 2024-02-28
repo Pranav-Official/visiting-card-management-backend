@@ -3,12 +3,9 @@ import Cards from '../../models/cards'; // Assuming you have a model defined for
 import { Op } from 'sequelize';
 
 
-type returnObjectType = {
-    status: boolean;
-    message: string;
-  };
 
-const deleteCardService = async (card_id: string): Promise<returnObjectType> => {
+
+const deleteCardService = async (card_id: string): Promise<responseType> => {
 
   try {
     // Find the card with the provided card_id and user_id
@@ -19,7 +16,7 @@ const deleteCardService = async (card_id: string): Promise<returnObjectType> => 
 
     if (!cardToDelete) {
 
-      return {status:false,message:"Card Id not found"}
+      return {status:false,message:"Card Id not found in cards table",data:{}}
     }
 
     // Update user_id to null
@@ -62,10 +59,10 @@ const deleteCardService = async (card_id: string): Promise<returnObjectType> => 
       }
     }
 
-    return {status:true,message:"Card deleted successfully"}; // Success
+    return {status:true,message:"Card deleted successfully",data:{}}; // Success
   } catch (error) {
     console.error('Error deleting card:', error);
-    return {status:false,message:"Error in deleting card"}; // Failure
+    return {status:false,message:"Error in deleting card",data:{}}; // Failure
   }
 };
 

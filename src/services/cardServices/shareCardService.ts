@@ -2,12 +2,9 @@ import Cards from '../../models/cards'; // Assuming you have a model defined for
 import SharedCards from '../../models/sharedCards';
 
 
-type returnObjectType = {
-    status: boolean;
-    message: string;
-  };
 
-const shareCardService = async (card_id: string,receiver_user_id:string): Promise<returnObjectType> => {
+
+const shareCardService = async (card_id: string,receiver_user_id:string): Promise<responseType> => {
 
   try {
     // Find the card with the provided card_id 
@@ -18,16 +15,16 @@ const shareCardService = async (card_id: string,receiver_user_id:string): Promis
 
     if (!cardToShare) {
 
-      return {status:false,message:"Card Id not found"}
+      return {status:false,message:"Card Id not found",data:{}}
     }
 
     // To create a new entry in SharedCards table
     await SharedCards.create({ card_id:card_id,user_id:receiver_user_id });
 
-   return {status:true,message:"Card shared successfully"}; // Success
+   return {status:true,message:"Card shared successfully",data:{}}; // Success
   } catch (error) {
     console.error('Error in sharing card:', error);
-    return {status:false,message:"Error in sharing card"}; // Failure
+    return {status:false,message:"Error in sharing card",data:{}}; // Failure
   }
 };
 

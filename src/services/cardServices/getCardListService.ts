@@ -2,11 +2,8 @@
 import { Op } from 'sequelize';
 import Cards from '../../models/cards';
 
-type returnObjectType = {
-  status: boolean;
-  message: Object;
-};
-const getCardListService = async (card_id: string): Promise<returnObjectType>  => {
+
+const getCardListService = async (card_id: string): Promise<responseType>  => {
   try {
     
     // Check if the card id is existing in Cards table
@@ -16,7 +13,7 @@ const getCardListService = async (card_id: string): Promise<returnObjectType>  =
     });
     //console.log(cardIdFound);
     if (!cardIdFound) {
-      return {status:false,message:{error:"card id not found"}}
+      return {status:false,message:"Card id not found in Cards table",data:{}}
     } else {
       //To get cards under a specific contact
       const cardList = await Cards.findAll({
@@ -43,12 +40,12 @@ const getCardListService = async (card_id: string): Promise<returnObjectType>  =
         job_title: card.job_title,
         company_name: card.company_name,
       }));
-      return {status:true,message:response}
+      return {status:true,message:"Card List found with given card id",data:response}
       
     }
   } catch (error) {
     console.error(error);
-    return {status:false,message:{error:"Error in fetching card"}}; // Failure
+    return {status:false,message:"Error in fetching card",data:{}}; // Failure
   }
 };
 export default getCardListService;
