@@ -5,7 +5,11 @@ const addToExistingContactController = async (req: Request, res: Response) => {
   const { user_id, shared_card_id, parent_card_id } = req.body;
 
   if (!user_id || !shared_card_id || !parent_card_id) {
-    return res.status(402).json({ error: 'Necessary Details Not Found!!!' });
+    return res.status(402).json({
+      status: false,
+      message: 'Necessary Details Not Found!!!',
+      data: {},
+    });
   }
 
   try {
@@ -22,9 +26,11 @@ const addToExistingContactController = async (req: Request, res: Response) => {
       return res.status(400).json({ ...returnedValue });
     }
   } catch (error) {
-    return res
-      .status(400)
-      .json({ error: 'An error occurred while adding the card.' + error });
+    return res.status(400).json({
+      status: false,
+      message: 'An error occurred while adding the card.' + error,
+      data: {},
+    });
   }
 };
 
