@@ -8,7 +8,7 @@ const getCardListController = async(req: Request, res: Response<responseType>) =
 
         const card_id = req.query.card_id as string;
         if(!card_id){
-          return res.status(StatusCodes.BAD_REQUEST).json('Card ID not found in request body')
+          return res.status(StatusCodes.BAD_REQUEST).json({status:false,message:'Card ID not found in request body',data:{}})
         }
         else{
           const getCardList=await  getCardListService(card_id);
@@ -20,7 +20,7 @@ const getCardListController = async(req: Request, res: Response<responseType>) =
           }}}
     catch(error){
         console.error('error',error);
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({status:false,message:"Internal server error",data:error});
     }
 };
  
