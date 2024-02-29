@@ -41,20 +41,26 @@ const getProfileService = async (user_id: string) => {
         status: 'pending',
       },
     });
-
-    // Returning profile details
-    return {
+    const profileData = {
       fullName: user.user_fullname,
       email: user.user_email,
       totalContacts: totalContacts,
       totalAcceptedCards: acceptedCards,
       totalPendingCards: pendingCards,
-      message: 'Successfully returned profile details',
+    };
+    // Returning profile details
+    return {
       status: true,
+      message: 'Successfully returned profile details',
+      data: profileData,
     };
   } catch (error) {
     console.error(error);
-    return { error: error, status: false };
+    return {
+      status: false,
+      message: 'Unable to fetch profile details' + error.message,
+      data: error,
+    };
   }
 };
 
