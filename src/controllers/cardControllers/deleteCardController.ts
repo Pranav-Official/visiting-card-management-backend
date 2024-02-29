@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 
 const deleteCardController = async (req: Request, res: Response<responseType>) => {
   try {
-    const card_id = req.body.card_id as string;
+    const {card_id}= req.body;
     if(!card_id){
       return res.status(StatusCodes.BAD_REQUEST).json({status:false,message:'Card ID not found in request body',data:{}})
     }

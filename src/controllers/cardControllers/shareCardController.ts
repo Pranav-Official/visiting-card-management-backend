@@ -6,8 +6,8 @@ import { StatusCodes } from 'http-status-codes';
 
 const shareCardController = async (req: Request, res: Response<responseType>) => {
   try {
-    const card_id = req.query.card_id as string;
-    const receiver_user_id = req.query.receiver_user_id as string;
+    const {card_id,receiver_user_id} = req.body;
+    
     if(!card_id ){
       return res.status(StatusCodes.BAD_REQUEST).json({status:false,message:'Card ID not found in request body',data:{}})
     }
