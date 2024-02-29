@@ -37,7 +37,6 @@ const changePasswordService = async (email: string, new_password: string) => {
       status: true,
     };
   } catch (error) {
-    console.error(error);
     return { status: false, data: error, message: error.message };
   }
 };
