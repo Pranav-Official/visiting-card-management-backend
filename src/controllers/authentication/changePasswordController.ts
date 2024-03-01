@@ -17,7 +17,6 @@ const changePasswordController = async (
 
     // Checking if any of the required parameters are missing
     if (!email || !new_password) {
-      responseBody.status = false;
       responseBody.message = 'Please provide all the necessary credentials';
       return res.status(StatusCodes.BAD_REQUEST).json(responseBody);
     }
@@ -39,10 +38,7 @@ const changePasswordController = async (
       return res.status(StatusCodes.NOT_FOUND).json(responseBody);
     }
   } catch (error) {
-    console.error('Error:', error);
-    responseBody.status = false;
     responseBody.message = error.message;
-    responseBody.data = {};
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseBody);
   }
 };

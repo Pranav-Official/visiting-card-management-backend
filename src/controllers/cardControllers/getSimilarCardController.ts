@@ -22,7 +22,6 @@ const getSimilarCardsController = async (
 
     // Checking if required parameters are missing
     if (!user_id && !card_name && !phone && !email) {
-      responseBody.status = false;
       responseBody.message = 'Please provide all the necessary credentials';
       return res.status(StatusCodes.BAD_REQUEST).json(responseBody);
     }
@@ -42,15 +41,11 @@ const getSimilarCardsController = async (
       responseBody.data = similarCardDetails.data;
       return res.status(StatusCodes.OK).json(responseBody);
     } else {
-      responseBody.status = false;
       responseBody.message = 'No similar cards found';
       return res.status(StatusCodes.NOT_FOUND).json(responseBody);
     }
   } catch (error) {
-    console.error('Error:', error);
-    responseBody.status = false;
     responseBody.message = error.message;
-    responseBody.data = {};
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseBody);
   }
 };

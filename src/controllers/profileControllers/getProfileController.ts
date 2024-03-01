@@ -17,7 +17,6 @@ const getProfileController = async (
     const user_id = req.query.user_id as string;
 
     if (!user_id) {
-      responseBody.status = false;
       responseBody.message = 'Please provide all the necessary credentials';
       return res.status(StatusCodes.BAD_REQUEST).json(responseBody);
     }
@@ -37,9 +36,7 @@ const getProfileController = async (
     }
   } catch (error) {
     console.error('Error:', error);
-    responseBody.status = false;
     responseBody.message = error.message;
-    responseBody.data = {};
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseBody);
   }
 };

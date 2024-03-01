@@ -5,7 +5,7 @@ import UserTable from '../../models/userTable';
 
 //Function to get the pending card list and its details
 
-const getPendingCardsService = async (userId: string): Promise<any> => {
+const getPendingCardsService = async (userId: string): Promise<responseType> => {
   try {
     if (!userId) {
       throw new Error('User ID is missing in the request.');
@@ -84,16 +84,16 @@ const getPendingCardsService = async (userId: string): Promise<any> => {
     }
 
     return {
-      hasPendingCards: pendingCards.length > 0,
+      status: true,
       message:
         pendingCards.length > 0
           ? 'Pending cards found'
           : 'No pending cards found',
-      pendingCards: formattedResponse,
+      data: formattedResponse,
     };
   } catch (error) {
     console.error('Error fetching pending cards:', error);
-    return { hasPendingCards: false, message: 'Internal Server Error' };
+    return { status: false, message: 'Error fetching pending cards',data:Error };
   }
 };
 
