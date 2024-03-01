@@ -21,6 +21,9 @@ const getSimilarCardsService = async (
         'email',
         'phone',
         'parent_card_id',
+        'job_title',
+        'company_name',
+        'company_website',
       ],
       raw: true,
     });
@@ -30,6 +33,9 @@ const getSimilarCardsService = async (
       card_name: string;
       email: string;
       phone: string;
+      job_title: string;
+      company_name: string;
+      company_website: string;
     };
 
     type keyProps = {
@@ -53,6 +59,9 @@ const getSimilarCardsService = async (
               card_name: contact.card_name,
               email: contact.email,
               phone: contact.phone,
+              job_title: contact.job_title,
+              company_name: contact.company_name,
+              company_website: contact.company_website,
             },
           ], // Initialize cards array, includes parent card
         };
@@ -74,6 +83,9 @@ const getSimilarCardsService = async (
                   card_name: parentCard.card_name,
                   email: parentCard.email,
                   phone: parentCard.phone,
+                  job_title: parentCard.job_title,
+                  company_name: parentCard.company_name,
+                  company_website: parentCard.company_website,
                 },
               ],
             };
@@ -86,6 +98,9 @@ const getSimilarCardsService = async (
             card_name: contact.card_name,
             email: contact.email,
             phone: contact.phone,
+            job_title: contact.job_title,
+            company_name: contact.company_name,
+            company_website: contact.company_website,
           });
         }
       }
