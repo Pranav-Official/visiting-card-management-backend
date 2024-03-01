@@ -2,7 +2,9 @@ import { Request, Response } from 'express';
 import addToExistingContactService from '../../services/cardServices/addToExistingContactService';
 
 const addToExistingContactController = async (req: Request, res: Response) => {
-  const { cardData } = req.body;
+  const { ...cardData } = req.body;
+
+  console.log('\n\nCard Data is: ', cardData);
 
   if (!cardData.parent_card_id) {
     return res.status(400).json({
