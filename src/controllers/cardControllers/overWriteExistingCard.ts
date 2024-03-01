@@ -21,12 +21,13 @@ const overWriteExistingCard = async (
       return res.status(StatusCodes.BAD_REQUEST).json(responseData);
     }
 
-    const foundCardDetails = await getCardDetailsService(shared_card_id);
+    const foundCardDetails = await getCardDetailsService(shared_card_id, true);
 
     if (foundCardDetails.status == true) {
       const editCardStatus = await editCardService(
         card_to_overWrite,
         foundCardDetails.data,
+        true,
       );
       console.log('editcard STATUS :', editCardStatus);
       if (editCardStatus == 1) {

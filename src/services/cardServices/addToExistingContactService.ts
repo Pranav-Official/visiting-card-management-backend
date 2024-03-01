@@ -47,27 +47,48 @@
 //TEST CODE HERE:
 import Cards from '../../models/cards';
 import createNewCardService from './createNewCardService';
+// import getCardDetailsService from './getCardDetailsService';
 
 //function to add card to existing contact
-const addToExistingContactService = async (cardData: Cards) => {
+const addToExistingContactService = async (
+  parent_card_id: string,
+  cardData: Cards,
+) => {
   try {
     //to check if the parent card exists in the database
+    // const findParentCard = await getCardDetailsService(parent_card_id, false);
+
     const findParentCard = await Cards.findOne({
-      where: { card_id: cardData.parent_card_id },
+      where: { card_id: parent_card_id },
       raw: true,
     });
+    console.log('\n\nParent Card Data is :', findParentCard);
 
     //to add card to and existing contact if parent card is found
     if (findParentCard != null) {
       //uses the createNewCardService to create a new card with details
       const createdCard = await createNewCardService(cardData);
 
-      if (createdCard) {
-        return {
-          status: true,
-          message: 'Card Added Successfully!',
-          data: {},
-        };
+      console.log('\n\nCreated Card: ', createdCard);
+      if (createdCard.status === true) {
+        const setParentCard = await Cards.update(
+          { parent_card_id: parent_card_id },
+          { where: { card_id: createdCard.data.cardId } },
+        );
+        console.log('\n\nSet Parent Card IS: ', setParentCard);
+        if (setParentCard[0] === 1) {
+          return {
+            status: true,
+            message: 'Card Added Successfully!',
+            data: createdCard.data,
+          };
+        } else {
+          return {
+            status: false,
+            message: 'Couldnt Update Parent Card ID',
+            data: {},
+          };
+        }
       } else {
         return { status: false, message: 'Unable To Add Card', data: {} };
       }
@@ -75,7 +96,7 @@ const addToExistingContactService = async (cardData: Cards) => {
       return { status: false, message: 'Parent Card Not Found', data: {} };
     }
   } catch (error) {
-    return { status: false, message: 'Failed To Add Card' + error, data: {} };
+    return { status: false, message: 'Failed To Add Card', data: error };
   }
 };
 
