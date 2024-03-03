@@ -19,7 +19,7 @@ const acceptCardService = async ({
     const receiverId = user_id;
     const newContactName = contact_name;
 
-    const cardDetailsResponse = await getCardDetailsService(oldCardId);
+    const cardDetailsResponse = await getCardDetailsService(oldCardId, false);
 
     if (!cardDetailsResponse) {
       console.error('Error retrieving card details from Cards table');
@@ -39,12 +39,12 @@ const acceptCardService = async ({
 
     const success = await createNewCardService(cardDetails);
 
-    if(success.status == true){
+    if (success.status == true) {
       const cardId = success.data.cardId;
       const updatedCard = await sharedCardAcceptService(
         oldCardId,
         receiverId,
-         cardId,
+        cardId,
       );
 
       return {
@@ -52,12 +52,13 @@ const acceptCardService = async ({
         message: updatedCard.message,
         data: updatedCard.data,
       };
+    } else {
+      return {
+        status: false,
+        message: 'error in accepting shared card',
+        data: Error,
+      };
     }
-
-    else{
-      return{status: false, message:'error in accepting shared card', data:Error}
-    }
-      
   } catch (error) {
     console.error('Error accepting card:', error);
     return {
