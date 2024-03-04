@@ -27,7 +27,7 @@ const getSimilarCardsService = async (
       ],
       raw: true,
     });
-
+    console.log('Hi contacts', contacts);
     type itemProps = {
       card_id: string;
       card_name: string;
@@ -39,6 +39,7 @@ const getSimilarCardsService = async (
     };
 
     type keyProps = {
+      parent_card_id: string;
       contact_name: string;
       cards: itemProps[];
     };
@@ -52,6 +53,7 @@ const getSimilarCardsService = async (
         // Parent card found
         const cardId = contact.card_id;
         groupedContacts[cardId] = {
+          parent_card_id: cardId,
           contact_name: contact.contact_name,
           cards: [
             {
@@ -76,6 +78,7 @@ const getSimilarCardsService = async (
           if (parentCard) {
             // If parent card found, initialize it in groupedContacts
             groupedContacts[parentCardId] = {
+              parent_card_id: parentCard.card_id,
               contact_name: parentCard.contact_name,
               cards: [
                 {
@@ -109,6 +112,7 @@ const getSimilarCardsService = async (
     // Converting the groupedContacts object to the desired format
     const similarCards = Object.keys(groupedContacts).map((key) => {
       return {
+        parent_card_id: groupedContacts[key].parent_card_id,
         contact_name: groupedContacts[key].contact_name,
         cards: groupedContacts[key].cards,
       };
