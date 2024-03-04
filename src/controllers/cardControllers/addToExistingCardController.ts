@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import addToExistingContactService from '../../services/cardServices/addToExistingContactService';
+import { StatusCodes } from 'http-status-codes';
 
 const addToExistingContactController = async (req: Request, res: Response) => {
   const { parent_card_id, ...cardData } = req.body;
-
-  console.log('\n\nCard Data is: ', cardData);
 
   if (!parent_card_id) {
     return res.status(400).json({
@@ -22,9 +21,9 @@ const addToExistingContactController = async (req: Request, res: Response) => {
     );
 
     if (returnedValue.status == true) {
-      return res.status(200).json({ ...returnedValue });
+      return res.status(StatusCodes.OK).json({ ...returnedValue });
     } else {
-      return res.status(400).json({ ...returnedValue });
+      return res.status(StatusCodes.BAD_REQUEST).json({ ...returnedValue });
     }
   } catch (error) {
     return res.status(400).json({ status: false, message: error, data: {} });

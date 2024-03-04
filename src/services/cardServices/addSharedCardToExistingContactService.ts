@@ -5,9 +5,9 @@ import getCardDetailsService from './getCardDetailsService';
 
 //function to add card to existing contact
 const addSharedCardToExistingContactService = async (
-  user_id,
-  shared_card_id,
-  parent_card_id,
+  user_id: string,
+  shared_card_id: string,
+  parent_card_id: string,
 ) => {
   try {
     // Retrieve details of the shared card
@@ -16,8 +16,6 @@ const addSharedCardToExistingContactService = async (
       false,
     );
 
-    console.log('\n\nShared Card Details: ', sharedCardDetails.data);
-
     if (sharedCardDetails.status === true) {
       // Create a new card with the shared card details
       const createCard = await addToExistingContactService(
@@ -25,7 +23,6 @@ const addSharedCardToExistingContactService = async (
         sharedCardDetails.data,
       );
 
-      console.log('\n\nCreate Card IS: ', createCard);
       try {
         if (createCard.status === true) {
           // To Update the status of the shared card
@@ -34,7 +31,7 @@ const addSharedCardToExistingContactService = async (
             { where: { card_id: shared_card_id, user_id: user_id } },
           );
 
-          console.log('\n\nCreatedCard. Data = ', createCard.data);
+          //to update the user_id of the newly created card
           const updateCardDetails = await Cards.update(
             {
               user_id: user_id,
@@ -42,8 +39,6 @@ const addSharedCardToExistingContactService = async (
             },
             { where: { card_id: createCard.data.cardId } },
           );
-
-          console.log('\n\nUpdate Card Details: ', updateCardDetails);
 
           if (updateSharedCardStatus[0] == 1 && updateCardDetails[0] == 1) {
             return {

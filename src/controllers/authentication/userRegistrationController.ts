@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import userRegistrationService from '../../services/authentication/userRegistrationService';
 import { validateEmail } from '../../utils/regexChecks';
+import { StatusCodes } from 'http-status-codes';
 
 const userResgistrationController = async (
   req: Request,
@@ -18,7 +19,7 @@ const userResgistrationController = async (
 
   const emailValidity = validateEmail(user_email);
   if (!emailValidity) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       status: false,
       message: 'Please Enter a Valid Email',
       data: {},
@@ -34,15 +35,15 @@ const userResgistrationController = async (
     );
 
     if (userRegistrationStatus.status === true) {
-      return res.status(200).json(userRegistrationStatus);
+      return res.status(StatusCodes.OK).json(userRegistrationStatus);
     } else {
-      return res.status(400).json(userRegistrationStatus);
+      return res.status(StatusCodes.BAD_REQUEST).json(userRegistrationStatus);
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       status: false,
       message: 'user registration failed' + error,
-      user_id: null,
+      data: {},
     });
   }
 };
