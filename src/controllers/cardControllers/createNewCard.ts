@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes";
 import createNewCardService from "../../services/cardServices/createNewCardService";
 import { Request, Response } from "express";
 
@@ -8,14 +9,14 @@ const createNewCardController = async(req: Request, res: Response):Promise<void>
         const success = await createNewCardService(cardData);
     
         if (success) {
-           res.status(200).json({ message: 'New card creation is successful' });
+          res.status(StatusCodes.OK).json(success);
         } else {
-           res.status(400).json({ error: 'Missing required fields or internal error' });
+          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(success);
         }
       } catch (error) {
         console.error(error);
-         res.status(500).json({ error: 'Internal server error' });
+         res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ status: false, message: 'Internal server error', data: error });
       }
 };
-
   export default createNewCardController;
