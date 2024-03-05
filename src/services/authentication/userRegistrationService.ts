@@ -39,14 +39,14 @@ const userRegistrationService = async (
       return {
         status: false,
         message: 'User Registration Failed',
-        user_id: null,
+        data: {},
       };
     }
   } catch (error) {
     return {
       status: false,
       message: 'User Registration Failed' + error,
-      user_id: null,
+      data: {},
     };
   }
 };

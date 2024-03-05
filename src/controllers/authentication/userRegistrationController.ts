@@ -42,7 +42,7 @@ const userResgistrationController = async (
   } catch (error) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       status: false,
-      message: 'user registration failed' + error,
+      message: 'User Registration Failed' + error,
       data: {},
     });
   }
