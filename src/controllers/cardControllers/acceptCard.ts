@@ -1,22 +1,22 @@
 import { Request, Response } from 'express';
 import acceptCardService from '../../services/cardServices/acceptCardService';
 import { StatusCodes } from 'http-status-codes';
+import { error } from 'console';
 
-const acceptCardController = async (req: Request, res: Response) => {
+const acceptCardController = async (req: Request, res: Response<responseType>) => {
   try {
     const { card_id, user_id, contact_name } = req.body;
-    //console.log(cardData, card_id);
 
     if (!card_id || !user_id || !contact_name) {
       console.error('Missing required parameters');
-      return res.status(400).json({ error: 'Missing required parameters' });
+      return res.status(StatusCodes.BAD_REQUEST).json({ status: false, message:'Missing required parameters',data:error });
     }
 
     const acceptedCards = await acceptCardService({
       card_id,
       user_id,
       contact_name,
-    });
+    }) as responseType;
 
     if (acceptedCards.status) {
       return res.status(StatusCodes.OK).json(acceptedCards);
@@ -28,7 +28,7 @@ const acceptCardController = async (req: Request, res: Response) => {
     console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ status: false, message: 'Internal server error', data: error });
+      .json({ status: false, message: 'Internal server error', data: error.message });
   }
 };
 
