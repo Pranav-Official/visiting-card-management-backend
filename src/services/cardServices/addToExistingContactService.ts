@@ -12,10 +12,10 @@ const addToExistingContactService = async (
       where: { card_id: parent_card_id },
       raw: true,
     });
-    console.log('\n\nREached 1');
 
     //to add card to and existing contact if parent card is found
     if (findParentCard != null) {
+      cardData.contact_name = '';
       //uses the createNewCardService to create a new card with details
       const createdCard = await createNewCardService(cardData);
 

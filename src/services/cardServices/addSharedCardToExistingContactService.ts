@@ -1,7 +1,7 @@
 import Cards from '../../models/cards';
-import SharedCards from '../../models/sharedCards';
 import addToExistingContactService from './addToExistingContactService';
 import getCardDetailsService from './getCardDetailsService';
+import sharedCardAcceptService from './sharedCardAcceptService';
 
 //function to add card to existing contact
 const addSharedCardToExistingContactService = async (
@@ -26,13 +26,14 @@ const addSharedCardToExistingContactService = async (
       try {
         if (createCard.status === true) {
           // To Update the status of the shared card
-          const updateSharedCardStatus = await SharedCards.update(
-            { status: 'Accepted' },
-            { where: { card_id: shared_card_id, user_id: user_id } },
+          const updateCardDetails = await sharedCardAcceptService(
+            shared_card_id,
+            user_id,
+            createCard.data.cardId,
           );
 
           //to update the user_id of the newly created card
-          const updateCardDetails = await Cards.update(
+          const updateCardUserID = await Cards.update(
             {
               user_id: user_id,
               shared_or_not: 1,
@@ -40,16 +41,16 @@ const addSharedCardToExistingContactService = async (
             { where: { card_id: createCard.data.cardId } },
           );
 
-          if (updateSharedCardStatus[0] == 1 && updateCardDetails[0] == 1) {
+          if (updateCardDetails.status === true && updateCardUserID[0] == 1)
             return {
               status: true,
               message: 'Card Added Successfully',
               data: createCard.data,
             };
-          } else {
+          else {
             return {
               status: false,
-              message: 'Failed To Update Card Details',
+              message: 'Failed To Update Card Details!',
               data: {},
             };
           }
