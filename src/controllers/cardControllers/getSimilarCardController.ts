@@ -1,8 +1,17 @@
 import { Request, Response } from 'express';
 import getSimilarCardsService from '../../services/cardServices/getSimilarCardsService';
+import { StatusCodes } from 'http-status-codes';
 
 // Controller function for handling requests to find similar cards
-const getSimilarCardsController = async (req: Request, res: Response) => {
+const getSimilarCardsController = async (
+  req: Request,
+  res: Response<responseType>,
+) => {
+  const responseBody: responseType = {
+    status: false,
+    message: '',
+    data: {},
+  };
   try {
     const { user_id, card_name, phone, email } = req.query as {
       user_id: string;
@@ -13,9 +22,8 @@ const getSimilarCardsController = async (req: Request, res: Response) => {
 
     // Checking if required parameters are missing
     if (!user_id && !card_name && !phone && !email) {
-      return res.status(400).json({
-        error: 'Provide necessary credentials ',
-      });
+      responseBody.message = 'Please provide all the necessary credentials';
+      return res.status(StatusCodes.BAD_REQUEST).json(responseBody);
     }
 
     // Calling the service to retrieve similar card details
@@ -27,12 +35,18 @@ const getSimilarCardsController = async (req: Request, res: Response) => {
     );
 
     // Sending the similar card details in the response if successful
-    if (similarCardDetails.status == true)
-      return res.status(200).json(similarCardDetails);
-    else return res.status(400).json(similarCardDetails);
+    if (similarCardDetails.status === true) {
+      responseBody.status = true;
+      responseBody.message = 'Similar cards found';
+      responseBody.data = similarCardDetails.data;
+      return res.status(StatusCodes.OK).json(responseBody);
+    } else {
+      responseBody.message = 'No similar cards found';
+      return res.status(StatusCodes.NOT_FOUND).json(responseBody);
+    }
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    responseBody.message = error.message;
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseBody);
   }
 };
 

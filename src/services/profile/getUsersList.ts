@@ -2,11 +2,8 @@
 import { Op } from 'sequelize';
 import UserTable from '../../models/userTable';
 
-type returnObjectType = {
-  status: boolean;
-  message: Object;
-};
-const getUserListService = async (user_id: string): Promise<returnObjectType>  => {
+
+const getUserListService = async (user_id: string): Promise<responseType>  => {
   try {
     
     
@@ -32,12 +29,12 @@ const getUserListService = async (user_id: string): Promise<returnObjectType>  =
         user_email: user.user_email,
         
       }));
-      return {status:true,message:response}
+      return {status:true,message:"Users list found",data:{response}}
       
     }
    catch (error) {
     console.error(error);
-    return {status:false,message:{error:"Error in fetching user list"}}; // Failure
+    return {status:false,message:"Error in fetching user list",data:{}}; // Failure
   }
 };
 export default getUserListService;
