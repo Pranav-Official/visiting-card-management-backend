@@ -3,12 +3,14 @@ import getCardDetailsService from '../../services/cardServices/getCardDetailsSer
 
 const getCardDetailsController =async(req:Request,res:Response<responseType>) =>{
     try{
-        const card_id = req.query.card_id as string;
+        const {card_id,full} = req.query
         if(!card_id){
             return res.status(400).json({status: false, message:'card id not given',data:{}})
         }
 
-        const cardDetails = await getCardDetailsService(card_id);
+        const isFull = full === 'true';
+
+        const cardDetails = await getCardDetailsService(card_id as string,isFull);
         if(cardDetails.status){
             return res.status(200).json(cardDetails);
         }

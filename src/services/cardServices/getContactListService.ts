@@ -8,9 +8,10 @@ const getContactListService = async (user_id: string) => {
       attributes: ['contact_name', 'card_id'],
       raw:true,
     });
-    return list;
+    // return list;
+    return { status: true, message:"List found", data:list};
   } catch (error) {
-    return 'Error fetching contact list: Cannot return contact list';
+    return { status: false, message:"List not found"+ error.message , data:error};
   }
 };
 export default getContactListService;

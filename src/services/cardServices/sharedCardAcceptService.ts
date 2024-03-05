@@ -12,6 +12,12 @@ const sharedCardAcceptService = async (
     });
     if (sharedCard) {
       sharedCard.update({ status: 'accepted' });
+    } else {
+      return {
+        status: false,
+        message: `Card shared couldn't be found`,
+        data: {},
+      };
     }
     const new_created_card = await Cards.findOne({
       where: { card_id: new_created_card_id },
@@ -21,12 +27,19 @@ const sharedCardAcceptService = async (
         { shared_or_not: 1 },
         { where: { card_id: new_created_card_id } },
       );
+
+      return {
+        status: true,
+        message: 'Shared card accepted successfully',
+        data: [],
+      };
+    } else {
+      return {
+        status: false,
+        message: 'error in accepting shared card',
+        data: {},
+      };
     }
-    return {
-      status: true,
-      message: 'Shared card accepted successfully',
-      data: [],
-    };
   } catch (error) {
     return {
       status: false,

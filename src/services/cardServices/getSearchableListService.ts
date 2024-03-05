@@ -13,11 +13,16 @@ const getSearchableListService = async (user_id: string) => {
       const emails = new Set();
       const phoneNumbers = new Set();
       const companyName = new Set();
+      let contactName: string;
+      const cardNames = new Set();
 
       if (mainCard.card_id) {
+        contactName = mainCard.contact_name;
         emails.add(mainCard.email);
         phoneNumbers.add(mainCard.phone);
         companyName.add(mainCard.company_name);
+        cardNames.add(mainCard.card_name);
+       
         
         const relatedCards = await Cards.findAll({ where: { parent_card_id: mainCard.card_id }, raw: true });
         relatedCards.forEach((card) => {
@@ -25,6 +30,7 @@ const getSearchableListService = async (user_id: string) => {
           emails.add(card.email);
           phoneNumbers.add(card.phone);
           companyName.add(card.company_name);
+          cardNames.add(card.card_name);
         });
       }
 
@@ -32,12 +38,15 @@ const getSearchableListService = async (user_id: string) => {
       const emailArray = Array.from(emails).filter(email => email !== null);
       const phoneNumberArray = Array.from(phoneNumbers).filter(phone => phone !== null);
       const companyNameArray = Array.from(companyName).filter(company => company !== null);
+      const cardNamesArray = Array.from(cardNames).filter(card_name => card_name !== null);
 
       return {
+        
         card_id: mainCard.card_id,
+        contact_name: contactName,
+        card_names : cardNamesArray,
         email: emailArray,
         phone_number: phoneNumberArray,
-        // related_cards: Array.from(relatedCardIds),
         company_names: companyNameArray
       };
     }));
