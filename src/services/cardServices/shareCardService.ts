@@ -8,6 +8,7 @@ const shareCardService = async (card_id: string, receiver_user_ids: string[] | u
       return { status: false, message: "Receiver User IDs must be provided as an array", data: {} };
     }
 
+    // Find the card with the provided card_id 
     const cardToShare = await Cards.findOne({
       where: { card_id: card_id },
       raw: true,
@@ -22,7 +23,9 @@ const shareCardService = async (card_id: string, receiver_user_ids: string[] | u
       return { status: false, message: "Receiver User IDs array is empty", data: {} };
     }
 
-    // Check if each receiver user has already received the card with pending status
+    const sentUserIds: string[] = []; // Array to store user IDs to which the card is sent
+
+    // Check if each receiver user has already received the card with status pending
     for (const receiver_user_id of receiver_user_ids) {
       const existingSharedCard = await SharedCards.findOne({
         where: {
@@ -33,19 +36,26 @@ const shareCardService = async (card_id: string, receiver_user_ids: string[] | u
       });
 
       if (!existingSharedCard) {
-        // Create a new entry in SharedCards table only if an entry with the same card_id and user_id with status pending is not present
+        // Create a new entry in SharedCards table only if an entry with the same card_id and user_id with status pending does not exist
         await SharedCards.create({ card_id: card_id, user_id: receiver_user_id, status: 'pending' });
+        sentUserIds.push(receiver_user_id); // Add the user ID to the sentUserIds array
       }
     }
 
-    return { status: true, message: "Card shared successfully", data: {} };
+    // Include the sentUserIds in the success message
+    const message = sentUserIds.length > 0 ? `Card sent to user IDs: ${sentUserIds.join(', ')}` : "No new cards sent";
+
+    return { status: true, message: message, data: { sentUserIds } }; // Success
   } catch (error) {
     console.error('Error in sharing card:', error);
-    return { status: false, message: "Error in sharing card", data: {} }; 
+    return { status: false, message: "Error in sharing card", data: {} }; // Failure
   }
 };
 
 export default shareCardService;
+
+
+
 
 
 
