@@ -1,9 +1,13 @@
 
 import { Op } from 'sequelize';
 import UserTable from '../../models/userTable';
-
-
+interface User {
+  user_id: string;
+  user_fullname: string;
+  user_email: string;
+}
 const getUserListService = async (user_id: string): Promise<responseType>  => {
+  
   try {
     
     
@@ -23,13 +27,13 @@ const getUserListService = async (user_id: string): Promise<responseType>  => {
     });
     
       // Extracting details from users List
-      const response = usersList.map((user:any) => ({
+      const response: User[] = usersList.map((user: User) => ({
         user_id: user.user_id,
         user_fullname: user.user_fullname,
         user_email: user.user_email,
         
       }));
-      return {status:true,message:"Users list found",data:{response}}
+      return {status:true,message:"Users list found",data:response}
       
     }
    catch (error) {
