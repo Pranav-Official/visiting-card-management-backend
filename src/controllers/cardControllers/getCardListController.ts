@@ -1,4 +1,6 @@
-
+import getCardListService from '../../services/cardServices/getCardListService';
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { StatusCodes } from "http-status-codes";
 import getCardListService from "../../services/cardServices/getCardListService";
 import { Request, Response } from "express";
@@ -19,6 +21,12 @@ const getCardListController = async(req: Request, res: Response) => {
         console.error('error',error);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
     }
+  } catch (error) {
+    console.error('error', error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: false, message: 'Internal server error', data: error });
+  }
 };
- 
-  export default getCardListController;
+
+export default getCardListController;

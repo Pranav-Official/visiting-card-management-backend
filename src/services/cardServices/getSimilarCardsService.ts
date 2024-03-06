@@ -21,12 +21,29 @@ const getSimilarCardsService = async (
         'email',
         'phone',
         'parent_card_id',
+        'job_title',
+        'company_name',
+        'company_website',
       ],
       raw: true,
     });
 
+    type itemProps = {
+      card_id: string;
+      card_name: string;
+      email: string;
+      phone: string;
+      job_title: string;
+      company_name: string;
+      company_website: string;
+    };
+
+    type keyProps = {
+      contact_name: string;
+      cards: itemProps[];
+    };
     // Grouping similar cards by parent card ID
-    const groupedContacts: Record<string, any> = {};
+    const groupedContacts: Record<string, keyProps> = {};
 
     //group by parent card ID and collect child cards with null contact name
     for (const contact of contacts) {
@@ -42,6 +59,9 @@ const getSimilarCardsService = async (
               card_name: contact.card_name,
               email: contact.email,
               phone: contact.phone,
+              job_title: contact.job_title,
+              company_name: contact.company_name,
+              company_website: contact.company_website,
             },
           ], // Initialize cards array, includes parent card
         };
@@ -63,6 +83,9 @@ const getSimilarCardsService = async (
                   card_name: parentCard.card_name,
                   email: parentCard.email,
                   phone: parentCard.phone,
+                  job_title: parentCard.job_title,
+                  company_name: parentCard.company_name,
+                  company_website: parentCard.company_website,
                 },
               ],
             };
@@ -75,29 +98,40 @@ const getSimilarCardsService = async (
             card_name: contact.card_name,
             email: contact.email,
             phone: contact.phone,
+            job_title: contact.job_title,
+            company_name: contact.company_name,
+            company_website: contact.company_website,
           });
         }
       }
     }
 
     // Converting the groupedContacts object to the desired format
-    const response = Object.keys(groupedContacts).map((key) => {
+    const similarCards = Object.keys(groupedContacts).map((key) => {
       return {
         contact_name: groupedContacts[key].contact_name,
         cards: groupedContacts[key].cards,
       };
     });
-    console.log(response);
     // Return the list of similar contacts with cards grouped under their respective contacts.
-    if (response.length != 0) return { response: response, status: true };
+    if (similarCards.length != 0)
+      return {
+        status: true,
+        message: 'Similar cards found',
+        data: similarCards,
+      };
     else
       return {
-        error: 'No similar cards found',
         status: false,
+        message: 'No similar cards found',
       };
   } catch (error) {
     console.error(error);
-    return { error: error, status: false };
+    return {
+      status: false,
+      message: 'Unable to find similar cards' + error.message,
+      data: error,
+    };
   }
 };
 
