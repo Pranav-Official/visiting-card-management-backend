@@ -15,6 +15,18 @@ import acceptCardController from '../controllers/cardControllers/acceptCard';
 import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
 import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 import overWriteExistingCard from '../controllers/cardControllers/overWriteExistingCard';
+import multer from 'multer';
+import modifiedCreateCardController from '../controllers/cardControllers/modifiedCreateCardController';
+const storage = multer.diskStorage({
+  destination: function (_req, _file, cb) {
+    cb(null, 'src/images'); // Specify the destination folder for storing uploaded files
+  },
+  filename: function (_req, file, cb) {
+    cb(null, file.originalname); // Use the original filename for storing the uploaded file
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const router = Router();
 //API end point to get contact list in homepage
@@ -79,4 +91,6 @@ router.post('/acceptCard', async (req: Request, res: Response) => {
 router.patch('/overwriteExistingCard', async (req: Request, res: Response) => {
   overWriteExistingCard(req, res);
 });
+router.post('/modifiedCreateNewCard', upload.fields([{ name: 'img_front_link', maxCount: 1 }, { name: 'img_back_link', maxCount: 1 }]), modifiedCreateCardController);
+
 export default router;
