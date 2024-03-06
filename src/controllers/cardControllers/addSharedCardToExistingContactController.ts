@@ -1,11 +1,16 @@
 import { Request, Response } from 'express';
 import addSharedCardToExistingContactService from '../../services/cardServices/addSharedCardToExistingContactService';
+import { StatusCodes } from 'http-status-codes';
 
 const addToExistingContactController = async (req: Request, res: Response) => {
   const { user_id, shared_card_id, parent_card_id } = req.body;
 
   if (!user_id || !shared_card_id || !parent_card_id) {
-    return res.status(402).json({ error: 'Necessary Details Not Found!!!' });
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      status: false,
+      message: 'Necessary Details Not Found!!!',
+      data: {},
+    });
   }
 
   try {
@@ -17,14 +22,16 @@ const addToExistingContactController = async (req: Request, res: Response) => {
     );
 
     if (returnedValue.status == true) {
-      return res.status(200).json({ ...returnedValue });
+      return res.status(StatusCodes.OK).json({ ...returnedValue });
     } else {
-      return res.status(400).json({ ...returnedValue });
+      return res.status(StatusCodes.BAD_REQUEST).json({ ...returnedValue });
     }
   } catch (error) {
-    return res
-      .status(400)
-      .json({ error: 'An error occurred while adding the card.' + error });
+    return res.status(400).json({
+      status: false,
+      message: 'An error occurred while adding the card.' + error,
+      data: {},
+    });
   }
 };
 
