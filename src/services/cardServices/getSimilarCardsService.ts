@@ -27,7 +27,6 @@ const getSimilarCardsService = async (
       ],
       raw: true,
     });
-    console.log('Hi contacts', contacts);
     type itemProps = {
       card_id: string;
       card_name: string;
