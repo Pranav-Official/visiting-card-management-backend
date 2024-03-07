@@ -27,7 +27,7 @@ const addToExistingContactController = async (req: Request, res: Response) => {
       return res.status(StatusCodes.BAD_REQUEST).json({ ...returnedValue });
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       status: false,
       message: 'An error occurred while adding the card.' + error,
       data: {},

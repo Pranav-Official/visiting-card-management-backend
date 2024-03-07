@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import getAcceptedCardsService from '../../services/cardServices/getAcceptedCardsService';
+import { StatusCodes } from 'http-status-codes';
 
 // /**
 //  * Retrieves the accepted cards for a given user and sends the result as a JSON response.
@@ -13,9 +14,9 @@ const getAcceptedCards = async (req: Request, res: Response) => {
   const user_id = req.query.user_id as string;
   const result = await getAcceptedCardsService(user_id);
   if (result.status) {
-    return res.status(200).json(result);
+    return res.status(StatusCodes.OK).json(result);
   }
-  return res.status(400).json(result);
+  return res.status(StatusCodes.NOT_FOUND).json(result);
 };
 
 export default getAcceptedCards;

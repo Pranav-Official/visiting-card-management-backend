@@ -1,17 +1,18 @@
 import { Request, Response } from 'express';
 import userLoginService from '../../services/authentication/userLoginService';
 import { validateEmail } from '../../utils/regexChecks';
+import { StatusCodes } from 'http-status-codes';
 
 const userLoginController = async (req: Request, res: Response) => {
   const { user_email, password } = req.body;
 
   if (!user_email || !password) {
-    return res.status(402).json({ error: 'Please Enter All the Details' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Please Enter All the Details' });
   }
 
   const emailValidity = validateEmail(user_email);
   if (!emailValidity) {
-    return res.status(402).json({ error: 'Please Enter a Valid Email' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Please Enter a Valid Email' });
   }
 
   try {
@@ -19,12 +20,12 @@ const userLoginController = async (req: Request, res: Response) => {
     const returnedValue = await userLoginService(user_email, password);
 
     if (returnedValue.status == true) {
-      return res.status(200).json(returnedValue);
+      return res.status(StatusCodes.OK).json(returnedValue);
     } else {
-      return res.status(401).json(returnedValue);
+      return res.status(StatusCodes.NOT_FOUND).json(returnedValue);
     }
   } catch (error) {
-    return res.status(401).json({ error: error });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error });
   }
 };
 

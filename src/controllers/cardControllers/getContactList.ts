@@ -13,7 +13,7 @@ const getContactListController = async(req:Request,res:Response<responseType>)=>
         const contactList = await getContactListService(user_id);
         console.log(contactList)
        
-        // return res.status(200).json({status:true, message:'contact list retrieved',data: {contactList}});
+        
         return res.status(StatusCodes.OK).json(contactList);
     }
     catch(error){

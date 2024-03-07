@@ -6,7 +6,7 @@ const addToExistingContactController = async (req: Request, res: Response) => {
   const { parent_card_id, ...cardData } = req.body;
 
   if (!parent_card_id) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       status: false,
       message: 'Parent Card Id Not Received',
       data: {},
@@ -26,7 +26,7 @@ const addToExistingContactController = async (req: Request, res: Response) => {
       return res.status(StatusCodes.BAD_REQUEST).json({ ...returnedValue });
     }
   } catch (error) {
-    return res.status(400).json({ status: false, message: error, data: {} });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ status: false, message: error, data: {} });
   }
 };
 
