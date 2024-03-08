@@ -10,7 +10,7 @@ const userResgistrationController = async (
   const { user_fullname, user_email, password } = req.body;
 
   if (!user_fullname || !user_email || !password) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       status: false,
       message: 'Please Enter All the Details',
       data: {},
