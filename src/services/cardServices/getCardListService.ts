@@ -1,11 +1,11 @@
-
 import { Op } from 'sequelize';
 import Cards from '../../models/cards';
 
-
-const getCardListService = async (card_id: string): Promise<responseType>  => {
+const getCardListService = async (
+  card_id: string,
+  user_id: string,
+): Promise<responseType> => {
   try {
-    
     // Check if the card id is existing in Cards table
     const cardIdFound = await Cards.findOne({
       where: { card_id: card_id },
@@ -13,12 +13,19 @@ const getCardListService = async (card_id: string): Promise<responseType>  => {
     });
     //console.log(cardIdFound);
     if (!cardIdFound) {
-      return {status:false,message:"Card id not found in Cards table",data:{}}
+      return {
+        status: false,
+        message: 'Card id not found in Cards table',
+        data: {},
+      };
     } else {
       //To get cards under a specific contact
       const cardList = await Cards.findAll({
         where: {
-          [Op.or]: [{ card_id: card_id }, { parent_card_id: card_id }],
+          [Op.and]: [
+            { [Op.or]: [{ card_id: card_id }, { parent_card_id: card_id }] },
+            { user_id: user_id },
+          ],
         },
         attributes: [
           'card_id',
@@ -40,12 +47,15 @@ const getCardListService = async (card_id: string): Promise<responseType>  => {
         job_title: card.job_title,
         company_name: card.company_name,
       }));
-      return {status:true,message:"Card List found with given card id",data:response}
-      
+      return {
+        status: true,
+        message: 'Card List found with given card id',
+        data: response,
+      };
     }
   } catch (error) {
     console.error(error);
-    return {status:false,message:"Error in fetching card",data:{}}; // Failure
+    return { status: false, message: 'Error in fetching card', data: {} }; // Failure
   }
 };
 export default getCardListService;
