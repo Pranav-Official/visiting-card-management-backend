@@ -2,7 +2,11 @@ import UserTable from '../../models/userTable';
 import userLoginService from './userLoginService';
 
 //User Registration Service
-const userRegistrationService = async (user_fullname, user_email, password) => {
+const userRegistrationService = async (
+  user_fullname: string,
+  user_email: string,
+  password: string,
+) => {
   //To Check if a user with same Email ID Exists
   const existingUser = await UserTable.findOne({
     where: { user_email: user_email },
@@ -12,8 +16,8 @@ const userRegistrationService = async (user_fullname, user_email, password) => {
   if (existingUser != null) {
     return {
       status: false,
-      message: 'user with same email id already exists, please login',
-      user_id: null,
+      message: 'User with same Email Id exists, Please Login!',
+      data: {},
     };
   }
 
@@ -24,21 +28,25 @@ const userRegistrationService = async (user_fullname, user_email, password) => {
       { raw: true },
     );
     if (createUser) {
-      const returnedValue = await userLoginService(user_email, password);
-      returnedValue.message = 'user registration successful';
-      return returnedValue;
+      // Using the Login Service
+      const loginStatus = await userLoginService(user_email, password);
+      return {
+        status: true,
+        message: 'User Registration Successful',
+        data: loginStatus.data,
+      };
     } else {
       return {
         status: false,
-        message: 'user registration failed',
-        user_id: null,
+        message: 'User Registration Failed',
+        data: {},
       };
     }
   } catch (error) {
     return {
       status: false,
-      message: 'user registration failed' + error,
-      user_id: null,
+      message: 'User Registration Failed' + error,
+      data: {},
     };
   }
 };

@@ -2,6 +2,7 @@ import getCardListService from '../../services/cardServices/getCardListService';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+
 const getCardListController = async (
   req: Request,
   res: Response<responseType>,
