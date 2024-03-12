@@ -18,7 +18,9 @@ describe('create new card controller', () => {
 
   it('missing required fields error', async () => {
     const createNewCardSpy = sinon.spy(createNewCardController);
-    const createNewCardServiceStub = sinon.stub().resolves(undefined);
+    const createNewCardServiceStub = sinon
+      .stub()
+      .resolves({ status: false, message: 'Card creation failed', data: {} });
     sinon.replace(
       createNewCardServiceModule,
       'default',
@@ -27,7 +29,9 @@ describe('create new card controller', () => {
     await createNewCardSpy(req as Request, res as Response);
     sinon.assert.called(createNewCardSpy);
     sinon.assert.calledWith(jsonSpy, {
-      error: 'Missing required fields or internal error',
+      status: false,
+      message: 'Card creation failed',
+      data: {},
     });
   });
 
@@ -48,8 +52,6 @@ describe('create new card controller', () => {
     );
     await createNewCardSpy(req as Request, res as Response);
     sinon.assert.called(createNewCardSpy);
-    sinon.assert.calledWith(jsonSpy, {
-      message: 'New card creation is successful',
-    });
+    sinon.assert.calledWith(jsonSpy, responseMock);
   });
 });
