@@ -2,22 +2,22 @@ import getCardListService from '../../services/cardServices/getCardListService';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+
 const getCardListController = async (
   req: Request,
   res: Response<responseType>,
 ) => {
   try {
     const card_id = req.query.card_id as string;
+    const user_id = req.query.user_id as string;
     if (!card_id) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({
-          status: false,
-          message: 'Card ID not found in request body',
-          data: {},
-        });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        status: false,
+        message: 'Card ID not found in request body',
+        data: {},
+      });
     } else {
-      const getCardList = await getCardListService(card_id);
+      const getCardList = await getCardListService(card_id, user_id);
       if (getCardList.status) {
         return res.status(StatusCodes.OK).json(getCardList);
       } else {

@@ -1,59 +1,70 @@
 import Cards from '../../models/cards';
-import SharedCards from '../../models/sharedCards';
+import addToExistingContactService from './addToExistingContactService';
+import getCardDetailsService from './getCardDetailsService';
+import sharedCardAcceptService from './sharedCardAcceptService';
 
 //function to add card to existing contact
 const addSharedCardToExistingContactService = async (
-  user_id,
-  shared_card_id,
-  parent_card_id,
+  user_id: string,
+  shared_card_id: string,
+  parent_card_id: string,
 ) => {
   try {
     // Retrieve details of the shared card
-    const sharedCardDetails = await Cards.findOne({
-      where: { card_id: shared_card_id },
-      raw: true,
-    });
+    const sharedCardDetails = await getCardDetailsService(
+      shared_card_id,
+      false,
+    );
 
-    if (sharedCardDetails != null) {
+    if (sharedCardDetails.status === true) {
       // Create a new card with the shared card details
-      const createCard = await Cards.create({
-        card_name: sharedCardDetails.card_name,
-        img_front_link: sharedCardDetails.img_front_link,
-        img_back_link: sharedCardDetails.img_back_link,
-        job_title: sharedCardDetails.job_title,
-        email: sharedCardDetails.email,
-        phone: sharedCardDetails.phone,
-        company_name: sharedCardDetails.company_name,
-        company_website: sharedCardDetails.company_website,
-        description: sharedCardDetails.description,
-        parent_card_id: parent_card_id,
-        user_id: user_id,
-        shared_or_not: 1,
-      });
+      const createCard = await addToExistingContactService(
+        parent_card_id,
+        sharedCardDetails.data,
+      );
 
-      if (createCard != null) {
-        // To Update the status of the shared card
-        const updateCardStatus = await SharedCards.update(
-          { status: 'Accepted' },
-          { where: { card_id: shared_card_id, user_id: user_id } },
-        );
+      try {
+        if (createCard.status === true) {
+          // To Update the status of the shared card
+          const updateCardDetails = await sharedCardAcceptService(
+            shared_card_id,
+            user_id,
+            createCard.data.cardId,
+          );
 
-        if (updateCardStatus == null) {
-          return {
-            error: 'Failed to Update Shared Card Status',
-            status: false,
-          };
+          //to update the user_id of the newly created card
+          const updateCardUserID = await Cards.update(
+            {
+              user_id: user_id,
+              shared_or_not: 1,
+            },
+            { where: { card_id: createCard.data.cardId } },
+          );
+
+          if (updateCardDetails.status === true && updateCardUserID[0] == 1)
+            return {
+              status: true,
+              message: 'Card Added Successfully',
+              data: createCard.data,
+            };
+          else {
+            return {
+              status: false,
+              message: 'Failed To Update Card Details!',
+              data: {},
+            };
+          }
+        } else {
+          return { status: false, message: 'Failed To Create Card!', data: {} };
         }
-      } else {
-        return { error: 'Failed To Create Card!', status: false };
+      } catch (error) {
+        return { status: false, message: 'Error Occured: ' + error, data: {} };
       }
-
-      return { message: 'Card Added Successfully', status: true };
     } else {
-      return { error: 'Cannot Find Card!', status: false };
+      return { status: false, message: 'Cannot Find Card!', data: {} };
     }
   } catch (error) {
-    return { error: error, status: false };
+    return { status: false, message: error, data: {} };
   }
 };
 

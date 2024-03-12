@@ -17,6 +17,7 @@ const getPendingCardsService = async (userId: string): Promise<responseType> => 
         {
           model: Cards,
           attributes: [
+            'card_id',
             'card_name',
             'img_front_link',
             'img_back_link',
@@ -50,18 +51,11 @@ const getPendingCardsService = async (userId: string): Promise<responseType> => 
       return acc;
     }, {});
 
-    // Printing cards for each group
-    for (const userId in groupedByUserId) {
-      console.log(`User ID: ${userId}`);
-      groupedByUserId[userId].forEach((card) => {
-        console.log(`Card Name: ${card['Card.card_name']}`);
-      });
-    }
-
     const formattedResponse = [];
     
     for (const userId in groupedByUserId) {
       const userCards = groupedByUserId[userId].map((card) => ({
+        card_id: card['Card.card_id'],
         card_name: card['Card.card_name'],
         img_front_link: card['Card.img_front_link'],
         img_back_link: card['Card.img_back_link'],
