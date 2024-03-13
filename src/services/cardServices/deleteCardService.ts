@@ -35,7 +35,8 @@ const deleteCardService = async (card_id: string): Promise<responseType> => {
       if (nextCard) {
         // set the parent_card_id as null in the next card of deleted card
         await Cards.update(
-          { parent_card_id: null },
+          { parent_card_id: null,
+          contact_name:cardToDelete.contact_name },
           {
             where: {
               user_id: cardToDelete.user_id,
