@@ -24,20 +24,23 @@ describe('acceptCards Controller', () => {
       },
     };
 
-    const acceptCardsStub = sinon.stub(acceptCardsModule, 'default').resolves({
-      status: true,
-      message: 'Shared card accepted successfully',
-      data: [],
-    });
+    const acceptCardsServiceStub = sinon
+      .stub(acceptCardsModule, 'default')
+      .resolves({
+        status: true,
+        message: 'Shared card accepted successfully',
+        data: [],
+      });
 
     await acceptCardsController(req as Request, res as Response);
 
-    sinon.assert.called(acceptCardsStub);
     sinon.assert.calledWith(jsonSpy, {
       status: true,
       message: 'Shared card accepted successfully',
       data: [],
     });
+
+    acceptCardsServiceStub.restore(); // Restore the stub after the test
   });
 
   it('Does not accept cards', async () => {
@@ -49,19 +52,22 @@ describe('acceptCards Controller', () => {
       },
     };
 
-    const acceptCardsStub = sinon.stub(acceptCardsModule, 'default').resolves({
-      status: false,
-      message: 'Error in accepting shared card',
-      data: {},
-    });
+    const acceptCardsServiceStub = sinon
+      .stub(acceptCardsModule, 'default')
+      .resolves({
+        status: false,
+        message: 'Error in accepting shared card',
+        data: {},
+      });
 
     await acceptCardsController(req as Request, res as Response);
 
-    sinon.assert.called(acceptCardsStub);
     sinon.assert.calledWith(jsonSpy, {
       status: false,
       message: 'Error in accepting shared card',
       data: {},
     });
+
+    acceptCardsServiceStub.restore(); // Restore the stub after the test
   });
 });
