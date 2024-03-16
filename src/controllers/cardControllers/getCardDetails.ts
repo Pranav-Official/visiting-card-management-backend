@@ -1,6 +1,6 @@
 import { Response ,Request} from 'express';
 import getCardDetailsService from '../../services/cardServices/getCardDetailsService';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes'; 
 
 const getCardDetailsController =async(req:Request,res:Response<responseType>) =>{
     try{

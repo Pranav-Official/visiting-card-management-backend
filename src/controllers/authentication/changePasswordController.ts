@@ -35,7 +35,7 @@ const changePasswordController = async (
       return res.status(StatusCodes.OK).json(responseBody);
     } else {
       responseBody.message = 'Unable to change password';
-      return res.status(StatusCodes.NOT_FOUND).json(responseBody);
+      return res.status(StatusCodes.NOT_FOUND).json(responseBody); 
     }
   } catch (error) {
     responseBody.message = error.message;

@@ -47,7 +47,7 @@ const shareCardService = async (card_id: string, receiver_user_ids: string[] | u
 
     return { status: true, message: message, data: { sentUserIds } }; // Success
   } catch (error) {
-    console.error('Error in sharing card:', error);
+    console.error('Error in sharing card:', error); 
     return { status: false, message: "Error in sharing card", data: {} }; // Failure
   }
 };

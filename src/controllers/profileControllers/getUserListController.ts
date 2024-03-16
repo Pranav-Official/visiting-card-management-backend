@@ -15,7 +15,7 @@ const getUserListController = async(req: Request, res: Response<responseType>) =
           return res.status(StatusCodes.OK).json(getUserList);
           }
           else{
-            return res.status(StatusCodes.NOT_FOUND).json(getUserList);
+            return res.status(StatusCodes.NOT_FOUND).json(getUserList); 
           }}}
     catch(error){
         console.error('error',error);
