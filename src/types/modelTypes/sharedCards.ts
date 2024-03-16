@@ -1,22 +1,13 @@
 import { Model } from 'sequelize';
-
-interface SharedCardType {
-  shared_card_id: string;
-  card_id: string;
-  user_id: string;
-  status: string;
-  createdAt: Date;
-  modifiedAt: Date;
-}
-export class SharedCards extends Model<SharedCardType> {
-  shared_card_id: string;
-  card_id: string;
-  user_id: string;
-  status: string;
-  createdAt: Date;
-  modifiedAt: Date;
-  Card: any;
-  UserTable: any;
+export class SharedCards extends Model {
+  declare shared_card_id: string;
+  declare card_id: string;
+  declare user_id: string;
+  declare status: string;
+  declare createdAt: Date;
+  declare modifiedAt: Date;
+  declare Card: any;
+  declare UserTable: any;
 }
 
 export default SharedCards;

@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Dialect, Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,14 +10,14 @@ if (!HOST || !DATABASE || !USER || !PASSWORD) {
     'Please provide values for HOST, DATABASE, USER, PASSWORD, and PORT in the .env file.',
   );
 }
-
-export const sequelize = new Sequelize({
-  dialect: 'mysql',
+console.log('Current Env', process.env.NODE_ENV);
+const prodConfig = {
+  dialect: 'mysql' as Dialect,
   host: HOST,
   database: DATABASE,
   username: USER,
   password: PASSWORD,
-
+  logging: process.env.NODE_ENV === 'test' ? false : console.log,
   // port: parseInt(PORT),
   // This is only for online DB's
   //   dialectOptions: {
@@ -27,6 +27,8 @@ export const sequelize = new Sequelize({
   //       ca: CA,
   //     },
   //   },
-});
+};
+
+export const sequelize = new Sequelize(prodConfig);
 
 export default sequelize;
