@@ -8,7 +8,7 @@ const createNewCardController = async(req: Request, res: Response<responseType>)
     
         const success = await createNewCardService(cardData);
     
-        if (success) {
+        if (success.status) {
            return res.status(StatusCodes.OK).json(success);
         } else {
           return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(success);
