@@ -38,16 +38,16 @@ describe('get contact list controller', () => {
 
     const createNewUserSpy = sinon.spy(getContactListController);
     const createNewUserServiceStub = sinon.stub().resolves({
-      status:false,
-      message:'List not found',
+      status:true,
+      message:'List found',
       data:{error},
     })
     sinon.replace(getContactListModule, 'default', createNewUserServiceStub);
     await createNewUserSpy(req as Request, res as Response);
     sinon.assert.called(createNewUserSpy);
     sinon.assert.calledWithMatch(jsonSpy, {
-      status: false,
-      message: 'List not found',
-    });
+      status: true,
+      message: 'List found',
+    }); 
   });
 });

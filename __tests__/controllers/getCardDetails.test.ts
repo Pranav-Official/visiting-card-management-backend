@@ -36,16 +36,16 @@ describe('get card details controller',() =>{
         
     const createNewUserSpy = sinon.spy(getCardDetailsController);
     const createNewUserServiceStub = sinon.stub().resolves({
-      status:false,
-      message:'List not found',
+      status:true,
+      message:'Card found',
       data:{error},
     })
     sinon.replace(getCardDetailsModule, 'default', createNewUserServiceStub);
     await createNewUserSpy(req as Request, res as Response);
     sinon.assert.called(createNewUserSpy);
     sinon.assert.calledWithMatch(jsonSpy, {
-      status: false,
-      message: 'List not found',
+      status: true,
+      message: 'Card found',  
     });
     })
 
