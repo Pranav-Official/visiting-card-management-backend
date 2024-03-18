@@ -24,6 +24,19 @@ UserTable.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    job_title: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
