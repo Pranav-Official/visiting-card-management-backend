@@ -15,6 +15,7 @@ import acceptCardController from '../controllers/cardControllers/acceptCard';
 import addSharedCardToExistingContactController from '../controllers/cardControllers/addSharedCardToExistingContactController';
 import getCardDetailsController from '../controllers/cardControllers/getCardDetails';
 import overWriteExistingCard from '../controllers/cardControllers/overWriteExistingCard';
+import rejectCardsController from '../controllers/cardControllers/rejectCardsController';
 
 const router = Router();
 //API end point to get contact list in homepage
@@ -78,5 +79,8 @@ router.post('/acceptCard', async (req: Request, res: Response) => {
 
 router.patch('/overwriteExistingCard', async (req: Request, res: Response) => {
   overWriteExistingCard(req, res);
+});
+router.post('/rejectCards', async (req: Request, res: Response) => {
+  rejectCardsController(req, res);
 });
 export default router;

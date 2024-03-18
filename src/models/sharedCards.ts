@@ -23,7 +23,7 @@ SharedCards.init(
     status: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      defaultValue: 'Pending',
+      defaultValue: 'pending',
     },
     createdAt: {
       type: DataTypes.DATE,
