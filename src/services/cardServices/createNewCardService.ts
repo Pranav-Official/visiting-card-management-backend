@@ -37,20 +37,23 @@ const createNewCardService = async (cardData: Cards) => {
       );
 
       const createdCardId = createCard.get('card_id');
-      console.log(`New card created: ${createCard.toJSON()}`);
 
       // Return the created card_id
       return {
         status: true,
         message: 'Card created successfully',
-        data:  {cardId:createdCardId} ,
+        data: { cardId: createdCardId },
       };
     } else {
-      return { status: false, message: 'Card creation failed', data: {error:Error} };
+      return {
+        status: false,
+        message: 'Card creation failed',
+        data: { error: Error },
+      };
     }
   } catch (error) {
     console.error(error);
-    return { status: false, message: error.message ,data:{}};
+    return { status: false, message: error.message, data: {} };
   }
 };
 

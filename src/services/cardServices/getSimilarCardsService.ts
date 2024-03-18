@@ -75,21 +75,11 @@ const getSimilarCardsService = async (
             raw: true,
           });
           if (parentCard) {
-            // If parent card found, initialize it in groupedContacts
+            // If parent card found, update contact name in groupedContacts
             groupedContacts[parentCardId] = {
               parent_card_id: parentCard.card_id,
               contact_name: parentCard.contact_name,
-              cards: [
-                {
-                  card_id: parentCard.card_id,
-                  card_name: parentCard.card_name,
-                  email: parentCard.email,
-                  phone: parentCard.phone,
-                  job_title: parentCard.job_title,
-                  company_name: parentCard.company_name,
-                  company_website: parentCard.company_website,
-                },
-              ],
+              cards: [],
             };
           }
         }
