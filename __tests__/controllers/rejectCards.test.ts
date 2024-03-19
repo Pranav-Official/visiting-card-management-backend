@@ -24,6 +24,23 @@ describe('rejectCardsController', () => {
     sinon.restore();
   });
 
+  it('Invalid card IDs provided', async () => {
+    const rejectCardsSpy = sinon.spy(rejectCardsController);
+    const rejectCardsServiceStub = sinon.stub().resolves({
+      status: false,
+      message: 'Card IDs were not found or already rejected',
+      data: {},
+    });
+    sinon.replace(rejectCardsServiceModule, 'default', rejectCardsServiceStub);
+    await rejectCardsSpy(req as Request, res as Response);
+    sinon.assert.called(rejectCardsSpy);
+    sinon.assert.calledWith(jsonSpy, {
+      status: false,
+      message: 'Card IDs were not found or already rejected',
+      data: {},
+    });
+  });
+
   it('Valid card IDs provided', async () => {
     const rejectCardsSpy = sinon.spy(rejectCardsController);
     const rejectCardsServiceStub = sinon.stub().resolves({
@@ -37,6 +54,29 @@ describe('rejectCardsController', () => {
     sinon.assert.calledWith(jsonSpy, {
       status: true,
       message: 'Cards rejected successfully',
+      data: {},
+    });
+  });
+
+  it('Already rejected card IDs provided', async () => {
+    const req: Partial<Request> = {
+      body: {
+        user_id: '4c338c2a-14de-47b2-9fb8-072077b86606',
+        card_ids: ['62545a2f-44ce-43bd-9c9c-a77e200d04e'],
+      },
+    };
+    const rejectCardsSpy = sinon.spy(rejectCardsController);
+    const rejectCardsServiceStub = sinon.stub().resolves({
+      status: false,
+      message: 'Card IDs were not found or already rejected',
+      data: {},
+    });
+    sinon.replace(rejectCardsServiceModule, 'default', rejectCardsServiceStub);
+    await rejectCardsSpy(req as Request, res as Response);
+    sinon.assert.called(rejectCardsSpy);
+    sinon.assert.calledWith(jsonSpy, {
+      status: false,
+      message: 'Card IDs were not found or already rejected',
       data: {},
     });
   });

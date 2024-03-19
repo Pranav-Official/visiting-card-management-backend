@@ -65,4 +65,40 @@ describe('change password controller', () => {
       data: undefined,
     });
   });
+
+  it('Unable to change password', async () => {
+    const req: Partial<Request> = {
+      body: {
+        email: 'anly@gmail.com',
+        new_password: 'Anly#123',
+      },
+    };
+
+    const jsonSpy = sinon.spy();
+    const res: Partial<Response> = {
+      status: sinon.stub().returnsThis(),
+      json: jsonSpy,
+    };
+    const changePasswordSpy = sinon.spy(changePasswordController);
+    const errorMessage = 'Unable to change password';
+    const changePasswordServiceStub = sinon.stub().resolves({
+      status: false,
+      message: errorMessage,
+      data: {},
+    });
+    sinon.replace(
+      changePasswordServiceModule,
+      'default',
+      changePasswordServiceStub,
+    );
+
+    await changePasswordSpy(req as Request, res as Response);
+
+    sinon.assert.called(changePasswordSpy);
+    sinon.assert.calledWith(jsonSpy, {
+      status: false,
+      message: errorMessage,
+      data: {},
+    });
+  });
 });
