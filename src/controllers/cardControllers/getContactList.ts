@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 const getContactListController = async(req:Request,res:Response<responseType>)=>{
 
     try{
-        const user_id = req.query.user_id as string;
+        const user_id = req.query.user_id as string; 
         if(!user_id){
             return res.status(StatusCodes.UNAUTHORIZED).json({status: false, message:'user_id not entered',data:{}})
         }

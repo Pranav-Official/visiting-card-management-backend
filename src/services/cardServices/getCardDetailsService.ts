@@ -17,7 +17,7 @@ const getCardDetailsService = async (card_id: string,full:boolean) => {
     const card = await Cards.findOne({
       where: { card_id: card_id },
       attributes: attributes,
-      raw: true
+      raw: true 
     });
 
     if (card === null) {
