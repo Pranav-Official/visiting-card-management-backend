@@ -30,7 +30,7 @@ describe('getSimilarCard Controller', () => {
     });
   });
 
-  it('Get similar Cards if correct parameters are passed', async () => {
+  it('Get similar Cards if similar cards exist', async () => {
     const req: Partial<Request> = {
       query: {
         user_id: '4f0e2a3b-8929-41fe-a60e-3914f8ba4bd1',
