@@ -14,7 +14,7 @@ const rejectCardsService = async (
       };
     }
 
-    // Update the status of cards with the provided card_ids
+    // Update the status of cardsas "rejected" in SharedCards as with the provided card_ids
     const [rejectedCards] = await SharedCards.update(
       { status: 'rejected' },
       {
