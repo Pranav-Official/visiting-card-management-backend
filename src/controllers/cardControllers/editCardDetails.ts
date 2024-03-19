@@ -17,7 +17,7 @@ const editCardDetails = async (req: Request, res: Response<responseType>) => {
         user_id,
         updatedCardDetails,
       );
-      if (createCard != 0) {
+      if (createCard == 1) {
         responseBody.status = true;
         responseBody.message = 'card edit successfull';
         return res.status(StatusCodes.OK).json(responseBody);
