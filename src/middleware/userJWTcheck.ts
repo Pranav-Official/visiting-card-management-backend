@@ -4,12 +4,6 @@ import UserTable from '../models/userTable';
 import 'dotenv/config';
 
 const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
-  const user_id = req.method === 'GET' ? req.query.user_id : req.body.user_id;
-  if (!user_id) {
-    return res
-      .status(401)
-      .json({ message: 'Unauthorized No user ID provided' });
-  }
   const authHeader =
     req.headers.authorization ?? (req.headers.Authorization as string);
   if (!authHeader?.startsWith('Bearer ')) {
@@ -21,9 +15,7 @@ const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
     process.env.JWT_SECRET_KEY || '',
     (err: any, decoded: any) => {
       if (err) return res.status(403).json({ err });
-      if (user_id !== decoded.user_id) {
-        return res.status(401).json({ message: 'Unauthorized, invalid token' });
-      }
+      const user_id: string = decoded.user_id;
 
       const user = UserTable.findOne({
         where: { user_id: user_id },
@@ -33,6 +25,11 @@ const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
         return res
           .status(401)
           .json({ message: 'Unauthorized, invalid token, user doesnt exist' });
+      }
+      if (req.method === 'GET') {
+        req.query.user_id = user_id;
+      } else {
+        req.body.user_id = user_id;
       }
       next();
       return null;
