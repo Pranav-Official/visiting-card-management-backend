@@ -44,6 +44,9 @@ const getProfileService = async (user_id: string) => {
     const profileData = {
       fullName: user.user_fullname,
       email: user.user_email,
+      phone: user.phone,
+      job_title: user.job_title,
+      company_name: user.company_name,
       totalContacts: totalContacts,
       totalAcceptedCards: acceptedCards,
       totalPendingCards: pendingCards,

@@ -9,7 +9,7 @@ const res: Partial<Response> = {
   status: sinon.stub().returnsThis(),
   json: jsonSpy,
 };
-
+ 
 describe('userRegistration Controller', () => {
   afterEach(() => {
     sinon.restore();
