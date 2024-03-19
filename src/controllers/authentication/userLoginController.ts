@@ -7,12 +7,20 @@ const userLoginController = async (req: Request, res: Response) => {
   const { user_email, password } = req.body;
 
   if (!user_email || !password) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Please Enter All the Details' });
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      status: false,
+      message: 'Please Enter All the Details',
+      data: [],
+    });
   }
 
   const emailValidity = validateEmail(user_email);
   if (!emailValidity) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Please Enter a Valid Email' });
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      status: false,
+      message: 'Please Enter a Valid Email',
+      data: [],
+    });
   }
 
   try {
@@ -25,7 +33,11 @@ const userLoginController = async (req: Request, res: Response) => {
       return res.status(StatusCodes.NOT_FOUND).json(returnedValue);
     }
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: false,
+      message: error.message || 'Internal server error',
+      data: [],
+    });
   }
 };
 
