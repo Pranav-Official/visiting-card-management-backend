@@ -17,7 +17,7 @@ const rejectCardsController = async (
       });
     }
 
-    // Call rejectCardsService with user_id and card_ids only
+    // Calling rejectCardsService
     const rejectCardsResponse = await rejectCardsService(user_id, card_ids);
 
     // Return response based on the service result
