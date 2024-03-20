@@ -22,7 +22,7 @@ const getSimilarCardsController = async (
 
     // Checking if required parameters are missing
     if (!user_id && !card_name && !phone && !email) {
-      responseBody.message = 'Please provide all the necessary credentials';
+      responseBody.message = 'Please provide necessary credentials';
       return res.status(StatusCodes.BAD_REQUEST).json(responseBody);
     }
 
